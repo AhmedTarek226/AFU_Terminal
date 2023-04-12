@@ -1,0 +1,296 @@
+<div class="container-fluid d-flex align-items-center justify-content-between">
+  <div class="d-flex mx-2">
+    <button
+      [hidden]="showToggleBtn"
+      type="button"
+      class="btn mx-3"
+      (click)="toggleShowSide()"
+    >
+      <i
+        class="fa-solid fa-bars light-icons"
+        style="font-size: 1.75rem !important"
+      ></i>
+    </button>
+    <div class="dropdown-div mx-3">
+      <div class="sec-center" style="margin: 0 auto; width: 0">
+        <input
+          class="dropdown1"
+          type="checkbox"
+          id="dropdown1"
+          name="dropdown1"
+        />
+        <label class="for-dropdown1" for="dropdown1">
+          <!-- <img alt="Apps" class="menu-img" src="assets/img/menu_modules.png" /> -->
+          <i
+            class="fa fa-large fa-chevron-circle-down light-icons"
+            (click)="translate()"
+            [style]="
+              ty === false
+                ? 'transition: all 0.5s;'
+                : 'transform: rotate(180deg); transition: all 0.5s'
+            "
+            style="font-size: 1.75rem !important"
+            aria-hidden="true"
+          ></i>
+        </label>
+        <div #dropdownModules class="section-dropdown1 mt-2">
+          <ng-container *ngFor="let link of apps">
+            <ng-container *ngIf="link[4] !== null">
+              <a (click)="redirect(link[4])"> {{ link[2] }} </a>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h5 class="fs-5 text-white">AFU Terminal</h5>
+
+  <!-- dropdown lists -->
+  <div class="d-flex mx-4">
+    <!-- change lang -->
+    <div class="dropdown-div">
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-globe" style="color: brown"></i>
+          {{ "header.lang.title" | translate }}
+        </button>
+        <ul class="dropdown-menu">
+          <li
+            class="dropdown-item"
+            style="cursor: pointer"
+            (click)="useLang('ar')"
+          >
+            <a
+              class="block text-center"
+              style="color: #000; text-decoration: none"
+            >
+              <span>{{ "header.lang.ar" | translate | uppercase }}</span>
+            </a>
+          </li>
+          <li
+            class="dropdown-item"
+            style="cursor: pointer"
+            (click)="useLang('en')"
+          >
+            <a
+              class="block text-center"
+              style="color: #000; text-decoration: none"
+            >
+              <span>{{ "header.lang.en" | translate | uppercase }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- change pass & logout -->
+    <div class="dropdown-div mx-1">
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-user" style="color: brown"></i>
+          {{ userName ? userName : "User" }}
+        </button>
+        <ul
+          #dropdownMenu
+          class="dropdown-menu"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <li class="dropdown-item">
+            <a
+              style="color: #000"
+              data-bs-toggle="modal"
+              data-bs-target="#changePassword"
+            >
+              <span style="margin-right: 10px">{{
+                "header.changePassword" | translate
+              }}</span>
+              <i class="fa-solid fa-key" style="color: black"></i>
+            </a>
+          </li>
+          <li class="dropdown-item" (click)="logout()">
+            <a style="color: #000">
+              <span style="margin-right: 10px">
+                {{ "header.logOut" | translate }}
+              </span>
+              <i class="fa-solid fa-lock" style="color: black"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- <select (change)="logout()" class="form-select form-select-sm" style="width: 10%;">
+                <option selected hidden>root</option>
+                <option value="logout">Logout</option>
+            </select> -->
+</div>
+
+<div
+  class="modal fade"
+  id="changePassword"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="changePasswordLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between">
+        <h5 class="modal-title" id="changePasswordLabel">
+          {{ "header.changePassword" | translate }}
+        </h5>
+        <button
+          (click)="reset()"
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          #closePassModall
+        >
+          <!-- <span>&times;</span> -->
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-ChangePassword">
+          <form [formGroup]="changePassForm" (ngSubmit)="changePassword()">
+            <div class="form-msg">
+              <label for="oldPass"
+                >{{ "header.changePasswordForm.oldPass" | translate }}&nbsp;
+                <span class="text-danger">*</span></label
+              >
+              <input
+                id="oldPass"
+                data-lpignore="true"
+                pInputText
+                formControlName="oldPassword"
+                [type]="'password'"
+              />
+              <div
+                class="abs"
+                *ngIf="
+                  (clickSubmit || changePassForm.get('oldPassword')?.touched) &&
+                  changePassForm.get('oldPassword')?.invalid
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="changePassForm.get('oldPassword')?.errors?.['required']"
+                  >{{
+                    "header.changePasswordForm.validationError.oldPass"
+                      | translate
+                  }}</span
+                >
+              </div>
+              <span class="" aria-hidden="true" (click)="showPassword(0)">{{
+                passwordShow[0] === "password" ? "Show" : "Hide"
+              }}</span>
+            </div>
+            <div class="form-msg">
+              <label for="newPass"
+                >{{ "header.changePasswordForm.newPass" | translate }} &nbsp;
+                <span class="text-danger">*</span></label
+              >
+              <input
+                id="newPass"
+                formControlName="newPassword"
+                pInputText
+                [type]="'password'"
+              />
+              <div
+                class="abs"
+                *ngIf="
+                  (clickSubmit || changePassForm.get('newPassword')?.touched) &&
+                  changePassForm.get('newPassword')?.invalid
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="!showMsg && changePassForm.get('newPassword')?.errors?.['required']"
+                  >{{
+                    "header.changePasswordForm.validationError.newPass"
+                      | translate
+                  }}</span
+                >
+              </div>
+              <span class="" aria-hidden="true" (click)="showPassword(1)">{{
+                passwordShow[1] === "password" ? "Show" : "Hide"
+              }}</span>
+            </div>
+            <div class="form-msg">
+              <label for="confirmPass"
+                >{{
+                  "header.changePasswordForm.confirmPass" | translate
+                }}
+                &nbsp; <span class="text-danger">*</span></label
+              >
+              <input
+                id="confirmPass"
+                formControlName="confirmPassword"
+                pInputText
+                [type]="'password'"
+              />
+              <div
+                class="abs"
+                *ngIf="
+                  (clickSubmit ||
+                    changePassForm.get('confirmPassword')?.touched) &&
+                  changePassForm.get('confirmPassword')?.invalid
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="!showMsg && changePassForm.get('confirmPassword')?.errors?.['required']"
+                  >{{
+                    "header.changePasswordForm.validationError.confirmPass"
+                      | translate
+                  }}</span
+                >
+              </div>
+              <div *ngIf="clickSubmit">
+                <span *ngIf="showMsg" class="text-danger abs">{{
+                  "header.changePasswordForm.validationError.matchConfirm"
+                    | translate
+                }}</span>
+              </div>
+              <span class="" aria-hidden="true" (click)="showPassword(2)">{{
+                passwordShow[2] === "password" ? "Show" : "Hide"
+              }}</span>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg fs-6"
+          (click)="changePassword()"
+        >
+          {{ "header.changePasswordForm.save" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary btn-lg fs-6"
+          data-bs-dismiss="modal"
+          (click)="reset()"
+        >
+          {{ "header.changePasswordForm.cancel" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

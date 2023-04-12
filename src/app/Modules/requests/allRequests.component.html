@@ -1,0 +1,9 @@
+<div class="container-fluid mx-0 px-2 py-2">
+  <app-search (searchData)="search($event)" (clearView)="reset()"></app-search>
+
+  <div class="divScroll">
+    <ng-container>
+      <app-requests-list [requestsList]="requestsList"></app-requests-list>
+    </ng-container>
+  </div>
+</div>

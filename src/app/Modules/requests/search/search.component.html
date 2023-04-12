@@ -1,0 +1,68 @@
+<!-- search accordion -->
+<p-accordion>
+  <p-accordionTab [selected]="true">
+    <ng-template pTemplate="header">
+      <div class="fs-6">{{ "requests.search.title" | translate }}</div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <form [formGroup]="searchForm" (ngSubmit)="search()" (reset)="reset()">
+        <div class="row p-0 m-0 align-items-center">
+          <!-- input field 1 -->
+          <div class="col-md-3 p-0 d-flex flex-column">
+            <label> {{ "requests.search.field1" | translate }} </label>
+            <span class="p-inputtext-sm mt-1">
+              <input
+                type="text"
+                style="width: 98%"
+                pKeyFilter="int"
+                pInputText
+                formControlName="field1"
+              />
+            </span>
+          </div>
+          <!-- input field 2 -->
+          <div class="col-md-3 p-0 d-flex flex-column">
+            <label> {{ "requests.search.field2" | translate }} </label>
+            <span class="p-inputtext-sm mt-1">
+              <input
+                type="text"
+                style="width: 98%"
+                pKeyFilter="int"
+                pInputText
+                formControlName="field2"
+              />
+            </span>
+          </div>
+          <!-- input field 3 -->
+          <div class="col-md-3 p-0 d-flex flex-column">
+            <label>
+              {{ "requests.search.field3" | translate }}
+            </label>
+            <span class="p-inputtext-sm mt-1">
+              <input
+                type="text"
+                style="width: 98%"
+                pKeyFilter="int"
+                pInputText
+                formControlName="field3"
+              />
+            </span>
+          </div>
+          <!-- btn group (save,reset) -->
+          <div class="col-md-3 fs-6 mx-0 py-2 mt-4">
+            <button type="submit" class="btn btn-success px-4 py-2">
+              {{ "requests.search.title" | translate }}
+            </button>
+            <button type="reset" class="btn btn-danger mx-1 px-4 py-2">
+              {{ "requests.search.reset" | translate }}
+            </button>
+          </div>
+        </div>
+
+        <span *ngIf="searchError.show" class="text-danger px-2">
+          {{ "requests.search.validateErr." + searchError.msg | translate }}
+        </span>
+      </form>
+    </ng-template>
+  </p-accordionTab>
+</p-accordion>

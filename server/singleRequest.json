@@ -1,0 +1,82 @@
+{
+  "data": {
+    "body": {
+      "sections": [
+        {
+          "sectionId": 1,
+          "sectionName": "General details",
+          "sectionDataType": "form",
+          "attributes": [
+            {
+              "Bank Name": "I&M BANK PLC"
+            },
+            {
+              "Action Required On": "Direct Driven Merchant"
+            },
+            {
+              "Merchant Address": "KIGALI-GASABO, ltd"
+            },
+            {
+              "Street Address (AMMF)": "KIGALI-GASABO, ltd"
+            },
+            {
+              "Service Type": "5734"
+            }
+          ]
+        },
+        {
+          "sectionId": 2,
+          "sectionName": "Merchant, Terminal and  account details",
+          "sectionDataType": "table",
+          "attributes": [
+            {
+              "merchantId": "IMRPOS20050892",
+              "terminalId": 69102947,
+              "terminalSerialNo": 1502062947,
+              "terminalName": "CYUSA TECHNOLOGY LTD",
+              "terminalType": "N-GENIUS POS",
+              "accountNo": "20050892002",
+              "currency": "Frw"
+            },
+            {
+              "merchantId": "IMRPOS20050892",
+              "terminalId": 69102947,
+              "terminalSerialNo": 1502062947,
+              "terminalName": "CYUSA TECHNOLOGY LTD",
+              "terminalType": "N-GENIUS POS",
+              "accountNo": "20050892002",
+              "currency": "Frw"
+            },
+            {
+              "merchantId": "IMRPOS20050892",
+              "terminalId": 69102947,
+              "terminalSerialNo": 1502062947,
+              "terminalName": "CYUSA TECHNOLOGY LTD",
+              "terminalType": "N-GENIUS POS",
+              "accountNo": "20050892002",
+              "currency": "Frw"
+            }
+          ],
+          "columns": [
+            "merchantId",
+            "terminalId",
+            "terminalSerialNo",
+            "terminalName",
+            "terminalType",
+            "accountNo",
+            "currency"
+          ],
+          "headers": [
+            "Merchant Id",
+            "Terminal Id",
+            "Terminal Serial No",
+            "Terminal Name",
+            "Terminal Type",
+            "Account No",
+            "Currency"
+          ]
+        }
+      ]
+    }
+  }
+}

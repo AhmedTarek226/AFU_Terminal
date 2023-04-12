@@ -1,0 +1,71 @@
+{
+  "loginForm": {
+    "username": "اسم المستخدم",
+    "password": "كلمة السر",
+    "login": "تسجيل الدخول",
+    "validateUser": "اسم المستخدم مطلوب",
+    "validatePass": "كلمة السر مطلوبة"
+  },
+  "home": {
+    "noPermMsg": "ليس لديك صلاحيات للوصول لباقي الصفحات في البرنامج الرجاء اختيار برنامج اخر او تسجيل الخروج"
+  },
+  "header": {
+    "lang": {
+      "title": "اللغة",
+      "ar": "اللغة العربية",
+      "en": "اللغة الانجليزية"
+    },
+    "changePassword": "تغيير كلمة السر",
+    "logOut": "تسجيل خروج",
+    "changePasswordForm": {
+      "oldPass": " كلمة السر القديمة ",
+      "newPass": "كلمة السر الجديدة",
+      "confirmPass": " تأكيد كلمة السر",
+      "save": "حفظ",
+      "cancel": " الغاء",
+      "validationError": {
+        "oldPass": "كلمة السر القديمة مطلوبة",
+        "newPass": "كلمة السر الجديدة مطلوبة",
+        "confirmPass": " تأكيد كلمة السر مطلوب ",
+        "matchConfirm": "يجب أن يكون تأكيد كلمة السر مطابق لكلمة السر الجديدة"
+      }
+    }
+  },
+  "sideBar": {
+    "home": "الرئيسية",
+    "reschedulling": "جدولة",
+    "audit": "مراجعة"
+  },
+  "requests": {
+    "search": {
+      "title": "بحث",
+      "field1": "الحقل الأول",
+      "field2": "الحقل الثاني",
+      "field3": "الحقل الثالث",
+      "reset": "مسح",
+      "validateErr": {
+        "fieldsRequired": "املأ قيمة واحدة على الأقل"
+      }
+    },
+    "requestsList": {
+      "title": "نموذج إنشاء التاجر",
+      "requestDetails": {
+        "close": "إغلاق"
+      },
+      "headers": {
+        "requestId": "رقم الطلب",
+        "templateId": "رقم النموذج",
+        "creationDate": "تاريخ الإنشاء",
+        "jiraNo": "رقم Jira"
+      },
+      "selectedColumns": "الأعمدة المحددة",
+      "searchKeyword": "كلمة البحث",
+      "chooseColumns": "اختر الأعمدة",
+      "clearFilters": "مسح التصفية",
+      "export": "تحميل",
+      "noRequestsFound": "لا يوجد بيانات",
+      "errorMsg": "فشل تحميل البيانات",
+      "currentPageReportTemplate": "إظهار من {first} إلى {last} من أصل {totalRecords}"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<p-toast
+  position="top-left"
+  [hideTransitionOptions]="'300ms'"
+  [showTransitionOptions]="'300ms'"
+></p-toast>
+
+<div class="col-12 mb-2">
+  <!-- <p-card> -->
+  <p-tabView (onChange)="handleChange($event)">
+    <p-tabPanel header="All Audit">
+      <ng-template pTemplate="content">
+        <app-allaudit></app-allaudit>
+      </ng-template>
+    </p-tabPanel>
+  </p-tabView>
+
+  <!-- </p-card> -->
+</div>

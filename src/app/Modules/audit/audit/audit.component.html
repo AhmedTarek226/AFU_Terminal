@@ -1,0 +1,189 @@
+<!-- {{AllSysAudit | json}} -->
+
+<div class="body-cont">
+  <app-searchaudit
+    (getResponse)="getDoneSearch($event)"
+    (clearView)="reset()"
+  ></app-searchaudit>
+
+  <div class="table-container-home">
+    <p-table
+      #auditTable
+      id="auditTable"
+      [value]="AllSysAudit"
+      [paginator]="false"
+      [columns]="selectedColumns"
+      [showCurrentPageReport]="true"
+      sortMode="multiple"
+      [scrollable]="true"
+      scrollHeight="425px"
+      styleClass="p-datatable-sm p-datatable-gridlines"
+      [loading]="loading"
+      [globalFilterFields]="[
+        'action_NAME',
+        'action_DATE',
+        'action_BY',
+        'action_DETAILS'
+      ]"
+      [reorderableColumns]="true"
+      [metaKeySelection]="true"
+      responsiveLayout="scroll"
+      selectionMode="multiple"
+      dataKey="audit_ID"
+    >
+      <!-- Start Caption Bar -->
+      <ng-template pTemplate="caption">
+        <div class="header-container">
+          <div class="hader-mul-sel">
+            <p-multiSelect
+              class="multicol"
+              [options]="cols"
+              [(ngModel)]="selectedColumns"
+              optionLabel="header"
+              [selectedItemsLabel]="
+                'audit.auditTable.selectedColumns' | translate
+              "
+              [placeholder]="'audit.auditTable.chooseColumns' | translate"
+              [ngModelOptions]="{ standalone: true }"
+            ></p-multiSelect>
+          </div>
+          <div class="hader-search">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                #inVal
+                (input)="auditTable.filterGlobal(inVal.value, 'contains')"
+                id="inputID"
+                [placeholder]="'audit.auditTable.searchKeyword' | translate"
+              />
+            </span>
+          </div>
+          <div class="hader-export">
+            <button
+              type="button"
+              class="btn btn-secondary btnNew"
+              (click)="resetOnlyTable()"
+              title="Clear Table Filters"
+            >
+              <i class="pi pi-filter-slash"></i>
+              {{ "audit.auditTable.clearFilters" | translate }}
+            </button>
+          </div>
+          <div class="hader-export">
+            <button
+              type="button"
+              class="btn btn-success btnNew"
+              (click)="exportExcel()"
+              title="Export Excel"
+              [disabled]="AllSysAudit.length == 0"
+            >
+              <i class="pi pi-file-excel"></i>
+              {{ "audit.auditTable.export" | translate }}
+            </button>
+          </div>
+        </div>
+      </ng-template>
+      <!-- End Caption Bar -->
+
+      <ng-template pTemplate="header" let-columns>
+        <tr *ngIf="columns.length != 0">
+          <th
+            *ngFor="let col of columns"
+            pReorderableColumn
+            pSortableColumn="{{ col.field }}"
+          >
+            <div class="p-d-flex p-jc-between p-ai-center">
+              {{ col.header }}
+              <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th *ngFor="let col of columns">
+            <p-columnFilter
+              type="text"
+              field="{{ col.field }}"
+            ></p-columnFilter>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns">
+            <span>{{ rowData[col.field] }} </span>
+          </td>
+        </tr>
+      </ng-template>
+      <!--       
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th class="mxw150" pReorderableColumn pSortableColumn="user_NAME">
+            <div class="p-d-flex p-jc-between p-ai-center">
+              User Name <p-sortIcon field="user_NAME"></p-sortIcon>
+            </div>
+          </th>
+          <th class="mxw200" pReorderableColumn pSortableColumn="date_TIME">
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Audit Date <p-sortIcon field="date_TIME"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="user_ACTION">
+            <div class="p-d-flex p-jc-between p-ai-center">
+              User Action <p-sortIcon field="user_ACTION"></p-sortIcon>
+            </div>
+          </th>
+        </tr>
+
+        <tr>
+          <th class="mxw150">
+            <p-columnFilter type="text" field="user_NAME"></p-columnFilter>
+          </th>
+          <th class="mxw200">
+            <p-columnFilter type="text" field="date_TIME"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="user_ACTION"></p-columnFilter>
+          </th>
+        </tr>
+      </ng-template> -->
+
+      <!-- <ng-template pTemplate="body" let-rowData>
+        <tr>
+          <td ngClass="audit" class="mxw150">
+            {{ rowData["user_NAME"] }}
+          </td>
+          <td ngClass="audit" class="mxw200">
+            {{ rowData["date_TIME"] }}
+          </td>
+          <td ngClass="audit">
+            {{ rowData["user_ACTION"] }}
+          </td>
+        </tr>
+      </ng-template> -->
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4" class="emptymessageTD">
+            <h3 class="emptymessage d-flex justify-content-start">
+              {{ "audit.auditTable." + msgErrorApi | translate }}
+            </h3>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <p-paginator
+      [rows]="paginatorObj['rows']"
+      [totalRecords]="paginatorObj['totalRecords']"
+      [rowsPerPageOptions]="paginatorObj['rowsPerPageOptions']"
+      (onPageChange)="paginate($event)"
+      [currentPageReportTemplate]="
+        'audit.auditTable.currentPageReportTemplate' | translate
+      "
+      [showCurrentPageReport]="paginatorObj['showCurrentPageReport']"
+      [showFirstLastIcon]="paginatorObj['showFirstLastIcon']"
+    ></p-paginator>
+  </div>
+</div>

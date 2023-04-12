@@ -1,0 +1,5 @@
+<div [ngStyle]="{ direction: getDir() }">
+  <p-toast [position]="getDir() == 'ltr' ? 'top-right' : 'top-left'"></p-toast>
+  <app-loader></app-loader>
+  <router-outlet></router-outlet>
+</div>

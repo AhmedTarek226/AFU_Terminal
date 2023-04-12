@@ -1,0 +1,211 @@
+aside {
+  z-index: 1;
+}
+
+.sidebar {
+  background-color: brown;
+  /* height: 100; */
+  color: #f1f1f1;
+}
+
+a {
+  background-color: transparent;
+}
+
+a:hover {
+  background-color: rgba(224, 224, 224, 0.582);
+}
+
+.active {
+  background-color: rgb(82, 20, 20);
+  border: none;
+  /* border-top: 2px solid rgb(224, 224, 224); */
+  border-left: 2px solid rgb(224, 224, 224);
+  border-right: 2px solid rgb(224, 224, 224);
+}
+
+.list-group > i {
+  font-size: 1.85rem !important;
+}
+
+.brand {
+  font-size: 1.5rem !important;
+  margin: auto;
+}
+
+.for-dropdown1 {
+  margin: 0;
+}
+.section-dropdown1 a {
+  position: relative;
+  color: #fff;
+  transition: all 200ms linear;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  border-radius: 5px;
+  padding: 5px 0;
+  padding-left: 5px;
+  padding-right: 5px;
+  /* width: 150px; */
+  min-width: 185px;
+  margin: 2px 0;
+  text-align: left;
+  text-decoration: none;
+  display: flex;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+
+.sec-center {
+  position: relative;
+  max-width: 100%;
+  text-align: center;
+  z-index: 200;
+}
+[type="checkbox"]:checked,
+[type="checkbox"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dropdown:checked + label,
+.dropdown:not(:checked) + label {
+  position: relative;
+  font-size: 20px !important;
+  line-height: 2;
+  transition: all 200ms linear;
+  border-radius: 4px;
+  min-width: 150px;
+  letter-spacing: 1px;
+  border: 1px white solid;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.dropdown1:checked + label,
+.dropdown1:not(:checked) + label {
+  position: relative;
+  font-size: 20px !important;
+  line-height: 2;
+  transition: all 200ms linear;
+  letter-spacing: 1px;
+  /* border: 1px white solid; */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  /* margin-top: 10px; */
+}
+
+.dropdown1:checked ~ .section-dropdown1 {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.section-dropdown1 a:hover {
+  color: var(--main-color) !important;
+  background-color: #eeeeee !important;
+  cursor: pointer;
+}
+
+.section-dropdown1 {
+  position: absolute;
+  padding: 2px;
+  background-color: #9f3636f2;
+  top: 40px;
+  left: 0;
+  width: -moz-fit-content;
+  width: fit-content;
+  border-radius: 4px;
+  display: block;
+  box-shadow: 0 14px 35px 0 rgba(9, 9, 12, 0.4);
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: all 200ms linear;
+  overflow: auto;
+  max-height: 300px;
+}
+
+.form-ChangePassword form {
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  gap: 10px;
+  width: 100%;
+}
+
+.form-ChangePassword input {
+  width: 100%;
+  position: absolute;
+}
+
+label {
+  display: block;
+  width: 100%;
+}
+.form-msg {
+  position: relative;
+  height: 75px;
+  margin-bottom: 5px;
+}
+.showHidePassword {
+  cursor: pointer;
+  position: absolute;
+  right: 18px;
+  top: 36px;
+}
+.abs {
+  position: absolute;
+  bottom: -15px;
+}
+
+.btn-close {
+  border-radius: 5px;
+  border: #d2d2d2 1px solid;
+  width: 25px;
+  height: 25px;
+}
+
+.btn-close span {
+  font-size: 40px;
+  position: absolute;
+  top: -1px;
+  right: 17px;
+}
+
+.btn-close:hover {
+  background-color: #a2a2a2;
+}
+
+.dropdown button {
+  background-color: white;
+  /* border: 0.7px #070707 solid; */
+  color: var(--main-color);
+  box-shadow: 0px 0px 3px 0.5px #bebebe;
+  border-radius: 10px;
+}
+
+.dropdown-item a {
+  cursor: pointer;
+}
+
+.dropdown button {
+  padding: 7px 25px;
+  font-size: 15px !important;
+}
+
+.for-dropdown1 i {
+  font-size: 2rem !important;
+}

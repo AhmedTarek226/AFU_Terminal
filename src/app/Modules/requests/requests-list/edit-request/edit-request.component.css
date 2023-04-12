@@ -1,0 +1,27 @@
+.section-header {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  border: 1px solid #f8f9fa;
+  padding: 5px 0;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  font-size: 14px !important;
+  font-weight: 500;
+  margin-top: 6px;
+  background-color: #f8f9fa;
+}
+
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 0 5px;
+}
+
+.modal-title {
+  font-size: 17px !important;
+  justify-content: center;
+  display: flex;
+  width: 100%;
+  letter-spacing: 1px;
+}

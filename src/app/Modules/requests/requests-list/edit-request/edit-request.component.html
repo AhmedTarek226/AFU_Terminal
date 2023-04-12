@@ -1,0 +1,52 @@
+<!-- Modal -->
+<!-- style="margin: 0 auto" -->
+<div
+  class="modal fade"
+  id="editRequestModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable"
+  >
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between">
+        <h3 class="modal-title fw-bold" id="staticBackdropLabel">
+          {{ "requests.requestsList.title" | translate }}
+        </h3>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body container">
+        <ng-container *ngFor="let section of requestData?.sections">
+          <div class="section-header">
+            {{ section.sectionName }}
+          </div>
+          <app-generate-table
+            *ngIf="section.sectionDataType == 'table'"
+            [sectionDetails]="section"
+          ></app-generate-table>
+          <app-generate-form
+            *ngIf="section.sectionDataType == 'form'"
+          ></app-generate-form>
+        </ng-container>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary px-4"
+          data-bs-dismiss="modal"
+        >
+          {{ "requests.requestsList.requestDetails.close" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

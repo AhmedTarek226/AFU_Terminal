@@ -1,0 +1,84 @@
+<!-- search accordion -->
+<p-accordion>
+  <p-accordionTab [selected]="true">
+    <ng-template pTemplate="header">
+      <div class="fs-6">{{ "audit.search.title" | translate }}</div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <div class="formControID">
+          <div class="row search d-flex align-items-center">
+            <div class="col-lg-2 col-md-4 col-sm-6">
+              <label for="UserName">{{
+                "audit.search.userName" | translate
+              }}</label>
+              <span class="p-inputtext-sm mt-1">
+                <input
+                  type="text"
+                  style="width: 98%"
+                  pInputText
+                  formControlName="UserName"
+                  id="UserName"
+                />
+              </span>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-sm-6">
+              <label for="ActionName">{{
+                "audit.search.actionName" | translate
+              }}</label>
+              <span class="p-inputtext-sm mt-1">
+                <input
+                  type="text"
+                  style="width: 98%"
+                  pInputText
+                  formControlName="ActionName"
+                  id="ActionName"
+                />
+              </span>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-sm-6">
+              <label for="date">{{
+                "audit.search.actionDate" | translate
+              }}</label>
+              <p-calendar
+                formControlName="ActionDate"
+                dateFormat="dd/mm/yy"
+                placeholder="dd/mm/yyyy"
+                [showButtonBar]="true"
+                [showIcon]="true"
+                [maxDate]="maxDate"
+                id="ActionDate"
+                inputId="ActionDate"
+                name="ActionDate"
+              >
+              </p-calendar>
+            </div>
+
+            <div class="col-2 fs-6 mx-0" style="margin-top: 1.7rem">
+              <button
+                class="btn btn-success mx-1 px-4 py-2"
+                type="submit"
+                [disabled]="myForm.invalid"
+              >
+                {{ "audit.search.title" | translate }}
+              </button>
+              <button
+                class="btn btn-danger mx-1 px-4 py-2"
+                type="button"
+                data-dismiss="modal"
+                (click)="reset()"
+              >
+                {{ "audit.search.reset" | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <span *ngIf="showSearchError" class="text-danger px-2">
+          {{ "audit.search.validateErr" | translate }}
+        </span>
+      </form>
+    </ng-template>
+  </p-accordionTab>
+</p-accordion>

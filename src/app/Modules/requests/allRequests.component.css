@@ -1,0 +1,30 @@
+::ng-deep .p-inputmask {
+  width: 98%;
+  height: 50%;
+}
+
+::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link {
+  padding: 8px !important;
+}
+
+::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link:focus {
+  box-shadow: 0 0 0 0.08rem #bfdbfe !important;
+}
+
+::ng-deep .p-accordion .p-accordion-content {
+  padding: 6px;
+}
+
+.divScroll {
+  max-height: 65vh;
+  border: 1px solid #00000026;
+  padding: 2px 4px;
+  /* border-top: 1px solid grey; */
+  overflow: auto;
+  border-radius: 5px;
+}
+
+/* ::ng-deep.p-overlay .p-component .ng-star-inserted {
+  background-color: black;
+  padding: 3px;
+} */

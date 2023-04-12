@@ -1,0 +1,125 @@
+<div class="body-cont" style="margin: 8px 0">
+  <p-table
+    #requestsTable
+    id="requestsTable"
+    [value]="requestsList"
+    [paginator]="false"
+    [columns]="selectedColumns"
+    [showCurrentPageReport]="true"
+    sortMode="multiple"
+    [scrollable]="true"
+    scrollHeight="425px"
+    styleClass="p-datatable-sm p-datatable-gridlines"
+    [globalFilterFields]="['requestId', 'templateId', 'creationDate', 'jiraNo']"
+    [reorderableColumns]="true"
+    [metaKeySelection]="true"
+    responsiveLayout="scroll"
+    selectionMode="multiple"
+    dataKey="requestId"
+  >
+    <!-- Start Caption Bar -->
+    <ng-template pTemplate="caption">
+      <div class="header-container">
+        <div class="hader-mul-sel">
+          <p-multiSelect
+            class="multicol"
+            appendTo="body"
+            [options]="cols"
+            [(ngModel)]="selectedColumns"
+            optionLabel="header"
+            [selectedItemsLabel]="
+              'requests.requestsList.selectedColumns' | translate
+            "
+            [placeholder]="'requests.requestsList.chooseColumns' | translate"
+            [ngModelOptions]="{ standalone: true }"
+          ></p-multiSelect>
+        </div>
+        <div class="hader-search">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              #inVal
+              (input)="requestsTable.filterGlobal(inVal.value, 'contains')"
+              id="inputID"
+              [placeholder]="'requests.requestsList.searchKeyword' | translate"
+            />
+          </span>
+        </div>
+        <div class="hader-export">
+          <button
+            type="button"
+            class="btn btn-secondary btnNew"
+            (click)="resetOnlyTable()"
+            title="Clear Table Filters"
+          >
+            <i class="pi pi-filter-slash"></i>
+            {{ "requests.requestsList.clearFilters" | translate }}
+          </button>
+        </div>
+        <div class="hader-export">
+          <button
+            type="button"
+            class="btn btn-success btnNew"
+            (click)="exportExcel()"
+            title="Export Excel"
+            [disabled]="requestsList.length == 0"
+          >
+            <i class="pi pi-file-excel"></i>
+            {{ "requests.requestsList.export" | translate }}
+          </button>
+        </div>
+      </div>
+    </ng-template>
+    <!-- End Caption Bar -->
+
+    <ng-template pTemplate="header" let-columns>
+      <tr *ngIf="columns.length != 0">
+        <th></th>
+        <th
+          *ngFor="let col of columns"
+          pReorderableColumn
+          pSortableColumn="{{ col.field }}"
+        >
+          <div class="p-d-flex p-jc-between p-ai-center">
+            {{ col.header }}
+            <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+          </div>
+        </th>
+      </tr>
+      <tr>
+        <th></th>
+        <th *ngFor="let col of columns">
+          <p-columnFilter type="text" field="{{ col.field }}"></p-columnFilter>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td>
+          <i
+            class="fa-regular fa-pen-to-square fs-4"
+            data-bs-toggle="modal"
+            data-bs-target="#editRequestModal"
+            (click)="editRequest(rowData['requestId'])"
+          ></i>
+        </td>
+        <td *ngFor="let col of columns">
+          <span>{{ rowData[col.field] }} </span>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="emptymessageTD">
+          <h3 class="emptymessage d-flex justify-content-start">
+            {{ "requests.requestsList." + msgErrorApi | translate }}
+          </h3>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <app-edit-request [requestData]="requestData"></app-edit-request>
+</div>

@@ -1,0 +1,62 @@
+<!-- Sidebar -->
+<!-- style="position: fixed;left: 0;top: 0;width: 8.36vw;" -->
+<aside class="sidebar position-fixed h-100" style="width: 8.33%">
+  <div class="list-group list-group-flush">
+    <!-- <div class="dropdown-div">
+      <div
+        class="sec-center"
+        style="margin: 0 auto; background-color: black; width: 0"
+      >
+        <input
+          class="dropdown1"
+          type="checkbox"
+          id="dropdown1"
+          name="dropdown1"
+        />
+        <label class="for-dropdown1" for="dropdown1">
+           <img alt="Apps" class="menu-img" src="assets/img/menu_modules.png" /> 
+          <i
+            class="fa fa-large fa-chevron-circle-down"
+            (click)="translate()"
+            [style]="
+              ty === false
+                ? 'transition: all 0.5s;'
+                : 'transform: rotate(180deg); transition: all 0.5s'
+            "
+            style="font-size: 1.85rem !important"
+            aria-hidden="true"
+          ></i>
+        </label>
+        <div #dropdownModules class="section-dropdown1 mt-4">
+          <ng-container *ngFor="let link of apps">
+            <ng-container *ngIf="link[4] !== null">
+              <a (click)="redirect(link[4])"> {{ link[2] }} </a>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div> -->
+    <a
+      [routerLink]="['/home']"
+      class="list-group-item list-group-item-action text-light d-flex flex-column align-items-center"
+      style="padding: 24.3px 0"
+    >
+      <i class="fa-solid fa-home fs-5"></i>
+      <!-- <p>{{ titles["home"] | translate }}</p> -->
+    </a>
+    <ng-container *ngFor="let route of routes">
+      <ng-container *ngIf="route.permision">
+        <a
+          [routerLink]="[route.routerLink]"
+          class="list-group-item list-group-item-action text-light d-flex flex-column align-items-center"
+          style="padding: 15px 0"
+          routerLinkActive="active"
+        >
+          <i class="fa-solid fa-calendar mb-2 fs-5"></i>
+          {{ "sideBar." + route.name | translate }}
+        </a>
+      </ng-container>
+    </ng-container>
+  </div>
+</aside>
+<!-- Sidebar -->

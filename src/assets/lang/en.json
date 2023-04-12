@@ -1,0 +1,71 @@
+{
+  "loginForm": {
+    "username": "User Name",
+    "password": "Password",
+    "login": "Login",
+    "validateUser": "User name is required",
+    "validatePass": "Password is required"
+  },
+  "header": {
+    "lang": {
+      "title": "Lang",
+      "ar": "ar",
+      "en": "en"
+    },
+    "changePassword": "Change password",
+    "logOut": "Log out",
+    "changePasswordForm": {
+      "oldPass": "Old password",
+      "newPass": "New password",
+      "confirmPass": "Confirm password",
+      "save": "Save",
+      "cancel": "Cancel",
+      "validationError": {
+        "oldPass": "Old password is required",
+        "newPass": "New password is required",
+        "confirmPass": "Confirm password is required",
+        "matchConfirm": "New password doesn't match with confirm password"
+      }
+    }
+  },
+  "home": {
+    "noPermMsg": "You don't have any permision in this app choose another app or logout"
+  },
+  "sideBar": {
+    "home": "Home",
+    "reschedulling": "Reschedulling",
+    "audit": "Audit"
+  },
+  "requests": {
+    "search": {
+      "title": "Search",
+      "field1": "Field 1",
+      "field2": "Field 2",
+      "field3": "Field 3",
+      "reset": "Reset",
+      "validateErr": {
+        "fieldsRequired": "Fill one field at least"
+      }
+    },
+    "requestsList": {
+      "title": "Merchant Creation Form",
+      "requestDetails": {
+        "close": "Close"
+      },
+      "headers": {
+        "requestId": "Request Id",
+        "templateId": "Template Id",
+        "creationDate": "Creation Date",
+        "jiraNo": "Jira No"
+      },
+      "selectedColumns": "Selected Columns",
+      "searchKeyword": "Search Keyword",
+      "chooseColumns": "Choose Columns",
+      "clearFilters": "Clear Filters",
+      "export": "Export",
+      "noRequestsFound": "No Data Found",
+      "errorMsg": "Something went wrong while getting data",
+      "currentPageReportTemplate": "Showing {first} to {last} of {totalRecords} entries"
+    }
+  }
+}

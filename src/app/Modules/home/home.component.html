@@ -1,0 +1,28 @@
+<!-- <app-header [userName]="userName" [apps]="apps"></app-header> -->
+<header>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg py-3" style="background-color: brown">
+    <app-header style="width: 100%"></app-header>
+  </nav>
+</header>
+<div class="body2">
+  <main id="main" class="card-list">
+    <h1 *ngIf="modules.length == 0" class="fs-2" style="color: brown;">{{"home.noPermMsg" | translate}}</h1>
+    <ng-container *ngFor="let module of modules">
+      <ng-container *ngIf="module.permision">
+        <a class="card" routerLink="{{ module.routerLink }}">
+          <img
+            alt="{{ module.name }}"
+            class="logos"
+            src="{{ module.src }}"
+            style="width: 90px"
+          />
+          <p class="names">{{ module.name }}</p>
+        </a>
+      </ng-container>
+    </ng-container>
+  </main>
+</div>
+<!-- <section *ngIf="isLoading" class="text-center" style="margin-top: 40vh">
+  <app-loader></app-loader>
+</section> -->
