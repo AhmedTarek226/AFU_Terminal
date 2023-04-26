@@ -8,7 +8,7 @@
     [showCurrentPageReport]="true"
     sortMode="multiple"
     [scrollable]="true"
-    scrollHeight="425px"
+    scrollHeight="340px"
     styleClass="p-datatable-sm p-datatable-gridlines"
     [globalFilterFields]="['requestId', 'templateId', 'creationDate', 'jiraNo']"
     [reorderableColumns]="true"
@@ -64,7 +64,6 @@
             class="btn btn-success btnNew"
             (click)="exportExcel()"
             title="Export Excel"
-            [disabled]="requestsList.length == 0"
           >
             <i class="pi pi-file-excel"></i>
             {{ "requests.requestsList.export" | translate }}

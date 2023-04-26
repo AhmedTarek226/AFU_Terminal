@@ -25,16 +25,17 @@
         ></button>
       </div>
       <div class="modal-body container">
-        <ng-container *ngFor="let section of requestData?.sections">
+        <ng-container *ngFor="let section of requestData">
           <div class="section-header">
             {{ section.sectionName }}
           </div>
           <app-generate-table
-            *ngIf="section.sectionDataType == 'table'"
+            *ngIf="section.isForm == 0"
             [sectionDetails]="section"
           ></app-generate-table>
           <app-generate-form
-            *ngIf="section.sectionDataType == 'form'"
+            [sectionDetails]="section"
+            *ngIf="section.isForm == 1"
           ></app-generate-form>
         </ng-container>
       </div>

@@ -29,7 +29,7 @@ export class AllRequestsComponent implements OnInit {
   ngOnInit(): void {
     this.requestsService.getAllRequests().subscribe({
       next: (response: any) => {
-        this.requestsList = response.body;
+        this.requestsList = response;
       },
       error: (err) => {
         console.error(err);
@@ -48,7 +48,7 @@ export class AllRequestsComponent implements OnInit {
     if (searchData.field1 || searchData.field2 || searchData.field3) {
       let sub = this.requestsService.search(searchData).subscribe({
         next: (repsonse) => {
-          this.requestsList = repsonse.body;
+          this.requestsList = repsonse;
         },
         error: (err) => {
           // this.isLoading = false;
@@ -57,7 +57,7 @@ export class AllRequestsComponent implements OnInit {
           else this.toastService.showError('خطأ', 'فشل تحميل الطلبات  !!!');
         },
         complete: () => {
-          if (this.requestsList.length == 0) {
+          if (this.requestsList?.length == 0) {
             if (this.translateService.currentLang == 'en')
               this.toastService.showWarn('Warning', 'No requests found');
             else this.toastService.showWarn('عذرًا', 'لا يوجد طلبات ');

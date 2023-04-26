@@ -25,7 +25,7 @@ interface IColumn {
 export class GenerateTableComponent implements OnInit {
   @Input() sectionDetails: any;
   headers: string[] = [];
-  rowsData: any;
+  rowsData: any[] = [];
   // selectedColumns: string[] = [];
   tableId: string;
   dataKey: string;
@@ -39,13 +39,41 @@ export class GenerateTableComponent implements OnInit {
   selectedcols: any[] = [];
   _selectedColumns: any[] = [];
   totalRow: number = 10;
+  output: Map<any, any> = new Map();
   ngOnInit(): void {
     // console.log('headers', this.headers);
     console.log(this.sectionDetails);
-    this.headers = this.sectionDetails?.headers;
-    this.rowsData = this.sectionDetails?.attributes;
-    this.selectedColumns = this.sectionDetails?.columns;
-    console.log('selectedColumns', this.selectedColumns);
+    // this.headers = Object.keys(this.sectionDetails?.attributes[0]);
+    this.sectionDetails?.attributes.map((val: any) => {
+      this.headers.push(val.attName);
+      // this.rowsData.push(val.attValue);
+      // this.rowsData.push()
+    });
+    // let output = [];
+    // this.sectionDetails?.attributes.forEach((attribute: any) => {
+    // this.output.set(attribute.attName, attribute.attValue);
+    // console.log(attribute);
+    // });
+
+    // this.rowsData = [this.output];
+    // console.log(this.rowsData);
+    // let output = new Map();
+    let rowsLength =
+      this.sectionDetails?.attributes[0].attValue.split(',').length;
+    for (let i = 0; i < rowsLength; i++) {
+      this.sectionDetails?.attributes.forEach((attribute: any) => {
+        this.output.set(attribute.attName, attribute.attValue.split(',')[i]);
+      });
+      this.rowsData.push(this.output);
+      this.output = new Map();
+    }
+    // console.log('rowsData ->', this.rowsData.length);
+
+    // this.headers = this.sectionDetails?.headers;
+    // this.rowsData = this.sectionDetails?.attributes;
+    // this.selectedColumns = this.sectionDetails?.columns;
+    this.selectedColumns = this.headers;
+    // console.log('rowsData', this.rowsData);
 
     for (let i = 0; i < this.selectedColumns?.length; i++) {
       this.cols.push({

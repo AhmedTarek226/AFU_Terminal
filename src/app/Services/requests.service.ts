@@ -17,7 +17,7 @@ export class RequestsService {
   }
 
   getAllRequests(): Observable<any> {
-    return this.http.get(`http://localhost:3000/data`);
+    return this.http.get(`${environment.apiURL}/getAllRequests`);
     // return this.http.post(this.URL+`/findAudit?page=${pageNo}&size=${size}` , _f );
   }
 
@@ -31,6 +31,9 @@ export class RequestsService {
   }
 
   getSingleRequest(requestId: any): Observable<any> {
-    return this.http.get(`http://localhost:3002/data`);
+    return this.http.post(
+      `${environment.apiURL}/getReqData?reqId=${requestId}`,
+      {}
+    );
   }
 }

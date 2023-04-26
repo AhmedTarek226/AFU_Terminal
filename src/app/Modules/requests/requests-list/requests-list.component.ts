@@ -101,7 +101,8 @@ export class RequestsListComponent implements OnInit {
     // alert('Edit request -> ' + requestId);
     this.requestsService.getSingleRequest(requestId).subscribe({
       next: (response: any) => {
-        this.requestData = response.body;
+        this.requestData = response;
+        console.log(this.requestData);
       },
       error: (err) => {
         console.log('error', err);
@@ -134,7 +135,7 @@ export class RequestsListComponent implements OnInit {
       .findRequests(pageNumber, pageSize, _fdata)
       .subscribe(
         (Response: any) => {
-          if (Response.length == 0) {
+          if (Response?.length == 0) {
             if (this.translateService.currentLang == 'ar')
               this.toastService.showWarn('عذرًا', 'لا يوجد معلومات');
             else this.toastService.showWarn('Warning', 'No Data Found');

@@ -1,9 +1,12 @@
 <div class="container">
   <div class="row row-cols-3 p-0 m-0 align-items-center">
-    <div *ngFor="let attribute of cols; index as i" class="col d-flex">
+    <div
+      *ngFor="let attribute of sectionDetails.attributes; index as i"
+      class="col d-flex"
+    >
       <!-- *ngIf="translateService.currentLang == 'en'" -->
-      <p class="card-text" style="width: 55%; font-weight: 500">
-        {{ attribute.field }}:
+      <p class="card-text" style="font-weight: 500; margin-right: 10px">
+        {{ attribute.attName }}:
       </p>
       <!-- <p
             *ngIf="translateService.currentLang == 'ar'"
@@ -13,8 +16,8 @@
             {{ attribute.fieldAr }}:
           </p> -->
       <p class="card-text fst-normal">
-        <span *ngIf="attribute.data">{{ attribute.data }}</span>
-        <span *ngIf="!attribute.data" class="text-danger fw-bold fs-5"
+        <span *ngIf="attribute.attValue">{{ attribute.attValue }}</span>
+        <span *ngIf="!attribute.attValue" class="text-danger fw-bold fs-5"
           >---</span
         >
       </p>

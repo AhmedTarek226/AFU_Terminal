@@ -67,7 +67,7 @@
           class="btn btn-success btnNew"
           (click)="exportExcel()"
           title="Export Excel"
-          [disabled]="rowsData?.length == 0"
+          [disabled]="rowsData.length == 0"
         >
           <i class="pi pi-file-excel"></i>
           Export
@@ -108,7 +108,7 @@
         ></i>
       </td> -->
       <td *ngFor="let col of columns">
-        <span>{{ rowData[col.field] }} </span>
+        <span>{{ rowData.get(col.field) | handleVoidValue }} </span>
       </td>
     </tr>
   </ng-template>
