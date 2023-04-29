@@ -10,7 +10,10 @@ import { GenerateTableComponent } from './requests-list/generate-table/generate-
 import { GenerateFormComponent } from './requests-list/generate-form/generate-form.component';
 import { HandleVoidValuePipe } from 'src/app/pipes/handle-void-value.pipe';
 
-const routes: Routes = [{ path: '', component: AllRequestsComponent }];
+const routes: Routes = [
+  { path: 'requests', component: AllRequestsComponent },
+  { path: 'requests/:id', component: EditRequestComponent, pathMatch: 'full' },
+];
 
 @NgModule({
   declarations: [

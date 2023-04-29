@@ -36,9 +36,10 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.search();
     }
     this.searchForm = new FormGroup({
-      field1: new FormControl(''),
-      field2: new FormControl(''),
-      field3: new FormControl(''),
+      requestId: new FormControl(''),
+      jiraNum: new FormControl(''),
+      status: new FormControl(''),
+      creationDate: new FormControl(''),
     });
     // this.searchData.emit({ field1: '', field2: '', field3: '' });
   }
@@ -58,15 +59,25 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   search() {
     if (
-      this.searchForm.value.field1 ||
-      this.searchForm.value.field2 ||
-      this.searchForm.value.field3
+      this.searchForm.value.requestId ||
+      this.searchForm.value.jiraNum ||
+      this.searchForm.value.status ||
+      this.searchForm.value.creationDate
     ) {
       this.searchError.show = false;
+      let x = this.searchForm.value.creationDate;
+      let newDateFormat = '';
+      console.log(x);
+
+      if (typeof x === 'object' && x !== null) {
+        x = String(x?.toDateString()).split(' ');
+        newDateFormat = `${x[2]}-${x[1]}-${x[3]?.slice(2)}`;
+      }
       this.searchData.emit({
-        field1: this.searchForm.value.field1,
-        field2: this.searchForm.value.field2,
-        field3: this.searchForm.value.field3,
+        requestId: this.searchForm.value.requestId,
+        jiraNum: this.searchForm.value.jiraNum,
+        status: this.searchForm.value.status,
+        creationDate: newDateFormat,
       });
     } else {
       this.searchError = {

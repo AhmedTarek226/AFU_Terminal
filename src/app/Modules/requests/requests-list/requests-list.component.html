@@ -99,10 +99,9 @@
         <td>
           <i
             class="fa-regular fa-pen-to-square fs-4"
-            data-bs-toggle="modal"
-            data-bs-target="#editRequestModal"
-            (click)="editRequest(rowData['requestId'])"
-          ></i>
+            [routerLink]="['/requests',rowData['requestId']]"
+            ></i>
+            <!-- (click)="editRequest(rowData['requestId'])" -->
         </td>
         <td *ngFor="let col of columns">
           <span>{{ rowData[col.field] }} </span>
@@ -120,5 +119,14 @@
       </tr>
     </ng-template>
   </p-table>
-  <app-edit-request [requestData]="requestData"></app-edit-request>
+  <p-paginator
+      [rows]="paginatorObj['rows']"
+      [totalRecords]="paginatorObj['totalRecords']"
+      [rowsPerPageOptions]="paginatorObj['rowsPerPageOptions']"
+      (onPageChange)="paginate($event)"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="paginatorObj['showCurrentPageReport']"
+      [showFirstLastIcon]="paginatorObj['showFirstLastIcon']"
+    ></p-paginator>
+  <!-- <app-edit-request [requestData]="requestData"></app-edit-request> -->
 </div>

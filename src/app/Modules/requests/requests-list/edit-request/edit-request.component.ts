@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { RequestsService } from 'src/app/Services/requests.service';
 
 @Component({
@@ -7,18 +8,26 @@ import { RequestsService } from 'src/app/Services/requests.service';
   styleUrls: ['./edit-request.component.css'],
 })
 export class EditRequestComponent {
-  @Input() requestData: any;
+  requestData: any;
+  requestId: any;
   // : any;
-  constructor(private requestsService: RequestsService) {}
-  // ngOnInit(): void {
-  //   this.requestsService.getSingleRequest(this.requestId).subscribe({
-  //     next: (response: any) => {
-  //       this.requestData = response.body;
-  //     },
-  //     error: (err) => {
-  //       console.log('error', err);
-  //     },
-  //     complete: () => {},
-  //   });
-  // }
+  constructor(
+    private requestsService: RequestsService,
+    private route: ActivatedRoute
+  ) {}
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.requestId = params['id'];
+    });
+    this.requestsService.getSingleRequest(this.requestId).subscribe({
+      next: (response: any) => {
+        this.requestData = response;
+        console.log(this.requestData);
+      },
+      error: (err) => {
+        console.log('error', err);
+      },
+      complete: () => {},
+    });
+  }
 }

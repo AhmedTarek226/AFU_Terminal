@@ -22,11 +22,11 @@ export class SidebarComponent implements OnInit {
   ) {
     this.routes = [
       {
-        name: 'reschedulling',
+        name: 'requests',
         src: '',
-        routerLink: '/reschedulling',
+        routerLink: '/requests',
         // permision: true,
-        permision: this.permisions.havePermisions('Scheduling.view'),
+        permision: this.permisions.havePermisions('Requests.view'),
       },
       {
         name: 'audit',
@@ -34,6 +34,13 @@ export class SidebarComponent implements OnInit {
         routerLink: '/audit',
         // permision: true,
         permision: this.permisions.havePermisions('Audit.view'),
+      },
+      {
+        name: 'reports',
+        src: '',
+        routerLink: '/reports',
+        // permision: true,
+        permision: this.permisions.havePermisions('Reports.view'),
       },
     ];
     this.sidebarService.isShow.subscribe((data) => {

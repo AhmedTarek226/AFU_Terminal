@@ -59,10 +59,10 @@ export class GenerateTableComponent implements OnInit {
     // console.log(this.rowsData);
     // let output = new Map();
     let rowsLength =
-      this.sectionDetails?.attributes[0].attValue.split(',').length;
+      this.sectionDetails?.attributes[0].attValue?.split('/*$').length;
     for (let i = 0; i < rowsLength; i++) {
       this.sectionDetails?.attributes.forEach((attribute: any) => {
-        this.output.set(attribute.attName, attribute.attValue.split(',')[i]);
+        this.output.set(attribute.attName, attribute.attValue?.split('/*$')[i]);
       });
       this.rowsData.push(this.output);
       this.output = new Map();

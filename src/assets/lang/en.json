@@ -33,15 +33,17 @@
   },
   "sideBar": {
     "home": "Home",
-    "reschedulling": "Reschedulling",
-    "audit": "Audit"
+    "requests": "Requests",
+    "audit": "Audit",
+    "reports": "Reports"
   },
   "requests": {
     "search": {
       "title": "Search",
-      "field1": "Field 1",
-      "field2": "Field 2",
-      "field3": "Field 3",
+      "requestId": "Request Id",
+      "jiraNum": "Jira Num",
+      "status": "Status",
+      "creationDate": "Creation Date",
       "reset": "Reset",
       "validateErr": {
         "fieldsRequired": "Fill one field at least"

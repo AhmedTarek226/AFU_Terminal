@@ -24,7 +24,7 @@ export class RequestsService {
   findRequests(pageNo: any, size: any, _f: any): Observable<any> {
     let newSearchData = this.sharedService.handleObject(_f);
     return this.http.post(
-      `${environment.apiURL}/requests/SearchRequest/${pageNo}/${size}`,
+      `${environment.apiURL}/searchAllRequests/${pageNo}/${size}`,
       newSearchData
     );
     // return this.http.post(this.URL+`/findAudit?page=${pageNo}&size=${size}` , _f );

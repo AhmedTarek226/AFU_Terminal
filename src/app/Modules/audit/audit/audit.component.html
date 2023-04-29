@@ -1,6 +1,6 @@
 <!-- {{AllSysAudit | json}} -->
-
-<div class="body-cont">
+<p>audit works</p>
+<!-- <div class="body-cont">
   <app-searchaudit
     (getResponse)="getDoneSearch($event)"
     (clearView)="reset()"
@@ -31,7 +31,6 @@
       selectionMode="multiple"
       dataKey="audit_ID"
     >
-      <!-- Start Caption Bar -->
       <ng-template pTemplate="caption">
         <div class="header-container">
           <div class="hader-mul-sel">
@@ -85,7 +84,6 @@
           </div>
         </div>
       </ng-template>
-      <!-- End Caption Bar -->
 
       <ng-template pTemplate="header" let-columns>
         <tr *ngIf="columns.length != 0">
@@ -116,53 +114,7 @@
           </td>
         </tr>
       </ng-template>
-      <!--       
-      <ng-template pTemplate="header" let-columns>
-        <tr>
-          <th class="mxw150" pReorderableColumn pSortableColumn="user_NAME">
-            <div class="p-d-flex p-jc-between p-ai-center">
-              User Name <p-sortIcon field="user_NAME"></p-sortIcon>
-            </div>
-          </th>
-          <th class="mxw200" pReorderableColumn pSortableColumn="date_TIME">
-            <div class="p-d-flex p-jc-between p-ai-center">
-              Audit Date <p-sortIcon field="date_TIME"></p-sortIcon>
-            </div>
-          </th>
-          <th pSortableColumn="user_ACTION">
-            <div class="p-d-flex p-jc-between p-ai-center">
-              User Action <p-sortIcon field="user_ACTION"></p-sortIcon>
-            </div>
-          </th>
-        </tr>
-
-        <tr>
-          <th class="mxw150">
-            <p-columnFilter type="text" field="user_NAME"></p-columnFilter>
-          </th>
-          <th class="mxw200">
-            <p-columnFilter type="text" field="date_TIME"></p-columnFilter>
-          </th>
-          <th>
-            <p-columnFilter type="text" field="user_ACTION"></p-columnFilter>
-          </th>
-        </tr>
-      </ng-template> -->
-
-      <!-- <ng-template pTemplate="body" let-rowData>
-        <tr>
-          <td ngClass="audit" class="mxw150">
-            {{ rowData["user_NAME"] }}
-          </td>
-          <td ngClass="audit" class="mxw200">
-            {{ rowData["date_TIME"] }}
-          </td>
-          <td ngClass="audit">
-            {{ rowData["user_ACTION"] }}
-          </td>
-        </tr>
-      </ng-template> -->
-
+      
       <ng-template pTemplate="emptymessage">
         <tr>
           <td colspan="4" class="emptymessageTD">
@@ -186,4 +138,4 @@
       [showFirstLastIcon]="paginatorObj['showFirstLastIcon']"
     ></p-paginator>
   </div>
-</div>
+</div> -->

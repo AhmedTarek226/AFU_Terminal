@@ -8,35 +8,35 @@
       <form [formGroup]="searchForm" (ngSubmit)="search()" (reset)="reset()">
         <div class="row p-0 m-0 align-items-center">
           <!-- input field 1 -->
-          <div class="col-md-3 p-0 d-flex flex-column">
-            <label> {{ "requests.search.field1" | translate }} </label>
+          <div class="col-md-2 p-0 d-flex flex-column">
+            <label> {{ "requests.search.requestId" | translate }} </label>
             <span class="p-inputtext-sm mt-1">
               <input
                 type="text"
                 style="width: 98%"
                 pKeyFilter="int"
                 pInputText
-                formControlName="field1"
+                formControlName="requestId"
               />
             </span>
           </div>
           <!-- input field 2 -->
-          <div class="col-md-3 p-0 d-flex flex-column">
-            <label> {{ "requests.search.field2" | translate }} </label>
+          <div class="col-md-2 p-0 d-flex flex-column">
+            <label> {{ "requests.search.jiraNum" | translate }} </label>
             <span class="p-inputtext-sm mt-1">
               <input
                 type="text"
                 style="width: 98%"
                 pKeyFilter="int"
                 pInputText
-                formControlName="field2"
+                formControlName="jiraNum"
               />
             </span>
           </div>
           <!-- input field 3 -->
-          <div class="col-md-3 p-0 d-flex flex-column">
+          <div class="col-md-2 p-0 d-flex flex-column">
             <label>
-              {{ "requests.search.field3" | translate }}
+              {{ "requests.search.status" | translate }}
             </label>
             <span class="p-inputtext-sm mt-1">
               <input
@@ -44,8 +44,17 @@
                 style="width: 98%"
                 pKeyFilter="int"
                 pInputText
-                formControlName="field3"
+                formControlName="status"
               />
+            </span>
+          </div>
+          <div class="col-md-3 p-0 d-flex flex-column">
+            <label>
+              {{ "requests.search.creationDate" | translate }}
+            </label>
+            <span class="p-inputtext-sm mt-1">
+              <p-calendar style="width: 98%" formControlName="creationDate" [showIcon]="true"></p-calendar>
+             
             </span>
           </div>
           <!-- btn group (save,reset) -->

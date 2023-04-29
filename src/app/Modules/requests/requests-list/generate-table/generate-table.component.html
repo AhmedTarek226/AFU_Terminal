@@ -18,7 +18,7 @@
 >
   <!-- Start Caption Bar -->
   <ng-template pTemplate="caption">
-    <div class="header-container">
+    <div class="header-container" style="display: none;">
       <div class="hader-mul-sel">
         <!-- <p-multiSelect
           class="multicol"
@@ -82,11 +82,11 @@
       <th
         *ngFor="let col of columns"
         pReorderableColumn
-        pSortableColumn="{{ col.field }}"
-      >
+        >
+        <!-- pSortableColumn="{{ col.field }}" -->
         <div class="p-d-flex p-jc-between p-ai-center">
           {{ col.header }}
-          <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+          <!-- <p-sortIcon field="{{ col.field }}"></p-sortIcon> -->
         </div>
       </th>
     </tr>
