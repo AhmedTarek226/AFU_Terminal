@@ -1,0 +1,24 @@
+<div class="con" style="width: 100%">
+  <div class="control-bar">
+    <button class="btn" (click)="updateChanges()">Save Changes</button>
+  </div>
+  <ng-container *ngFor="let section of requestData">
+    <p-accordion>
+      <p-accordionTab [selected]="true">
+        <ng-template pTemplate="header">
+          <div class="fs-6">{{ section.sectionName }}</div>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <app-generate-table
+            *ngIf="section.isForm == 0"
+            [sectionDetails]="section"
+          ></app-generate-table>
+          <app-generate-form
+            [sectionDetails]="section"
+            *ngIf="section.isForm == 1"
+          ></app-generate-form>
+        </ng-template>
+      </p-accordionTab>
+    </p-accordion>
+  </ng-container>
+</div>

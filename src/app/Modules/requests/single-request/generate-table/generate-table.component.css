@@ -1,0 +1,7 @@
+.emptymessage {
+  /* px-3 pt-2 fs-6 text-danger */
+  margin: 0;
+  padding: 5px 10px;
+  font-size: 14px;
+  color: red;
+}

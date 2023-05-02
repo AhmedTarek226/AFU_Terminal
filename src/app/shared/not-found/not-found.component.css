@@ -1,9 +1,9 @@
 * {
-    font-size: 16px !important;
+  font-size: 16px !important;
 }
 
-span{
-    font-size: 30px !important;
+span {
+  font-size: 30px !important;
 }
 
 .flex-container {
@@ -13,7 +13,7 @@ span{
   height: 100vh;
   color: white;
   /* background-color: tomato; */
-  background-color: #9f3636f7;
+  background-color: #183763;
   /* animation: colorSlide 15s cubic-bezier(0.075, 0.82, 0.165, 1) infinite; */
 }
 

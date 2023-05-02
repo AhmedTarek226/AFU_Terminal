@@ -90,6 +90,27 @@ export class AllRequestsComponent implements OnInit {
     ];
     this.selectedcols = this.cols.filter((col: any) => col.display == 1);
     this._selectedColumns = this.selectedcols;
+    this.requestsService.getAllRequests().subscribe(
+      (Response: any) => {
+        if (Response?.length == 0) {
+          if (this.translateService.currentLang == 'ar')
+            this.toastService.showWarn('عذرًا', 'لا يوجد معلومات');
+          else this.toastService.showWarn('Warning', 'No Data Found');
+        }
+        this.requestsList = Response;
+        console.log(this.requestsList);
+
+        this.paginatorObj['totalRecords'] = Response.totalElements;
+        console.log('this.paginatorObj');
+        console.log(this.paginatorObj);
+        this.loading = false;
+      },
+      (error: any) => {
+        this.msgErrorApi = 'errorMsg';
+
+        this.loading = false;
+      }
+    );
   }
 
   @Input() get selectedColumns(): any[] {

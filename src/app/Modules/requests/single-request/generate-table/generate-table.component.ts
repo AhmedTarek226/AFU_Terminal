@@ -40,9 +40,11 @@ export class GenerateTableComponent implements OnInit {
   _selectedColumns: any[] = [];
   totalRow: number = 10;
   output: Map<any, any> = new Map();
+  ids: Map<any, any> = new Map();
+  newValue: any;
   ngOnInit(): void {
     // console.log('headers', this.headers);
-    console.log(this.sectionDetails);
+    // console.log(this.sectionDetails);
     // this.headers = Object.keys(this.sectionDetails?.attributes[0]);
     this.sectionDetails?.attributes.map((val: any) => {
       this.headers.push(val.attName);
@@ -59,15 +61,16 @@ export class GenerateTableComponent implements OnInit {
     // console.log(this.rowsData);
     // let output = new Map();
     let rowsLength =
-      this.sectionDetails?.attributes[0].attValue?.split('/*$').length;
+      this.sectionDetails?.attributes[1].attValue?.split('/*$').length;
     for (let i = 0; i < rowsLength; i++) {
       this.sectionDetails?.attributes.forEach((attribute: any) => {
         this.output.set(attribute.attName, attribute.attValue?.split('/*$')[i]);
+        this.ids.set(attribute.attName, attribute.id);
       });
       this.rowsData.push(this.output);
+      console.log('output ->', this.output);
       this.output = new Map();
     }
-    // console.log('rowsData ->', this.rowsData.length);
 
     // this.headers = this.sectionDetails?.headers;
     // this.rowsData = this.sectionDetails?.attributes;
@@ -86,9 +89,28 @@ export class GenerateTableComponent implements OnInit {
     this._selectedColumns = this.selectedcols;
 
     // this.selectedColumns = this.cols;
-    console.log('on init table', this.cols);
+    console.log('Rows Data -> ', this.rowsData);
   }
 
+  updatedAttributes: Map<any, any> = new Map();
+  setChanges(rowData: any, field: any) {
+    // console.log('ID -> ', this.ids.get(field));
+    // console.log('rowdata -> ', rowData);
+    // console.log('field -> ', field);
+    // console.log('New Value -> ', this.newValue);
+    rowData.set(field, this.newValue);
+    // console.log('Rows Data -> ', this.rowsData);
+    let lastUpdatedValue = '';
+    for (let row of this.rowsData) {
+      lastUpdatedValue += row.get(field) + '/*$';
+      // row.get(field);
+    }
+    this.updatedAttributes.set(this.ids.get(field), lastUpdatedValue);
+    // console.log('updated Attributes -> ', this.updatedAttributes);
+
+    this.newValue = '';
+    // this.updatedAttributes.set(attribute.id, attribute.attValue);
+  }
   @Input() get selectedColumns(): any[] {
     return this._selectedColumns;
   }

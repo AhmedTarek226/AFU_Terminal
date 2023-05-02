@@ -17,7 +17,6 @@
   position: relative;
   flex: 1 1 auto;
   padding: 0 5px;
- 
 }
 
 .modal-title {
@@ -26,4 +25,31 @@
   display: flex;
   width: 100%;
   letter-spacing: 1px;
+}
+
+::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link {
+  padding: 8px;
+}
+
+::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link:focus {
+  box-shadow: 0 0 0 0.08rem #bfdbfe !important;
+}
+
+::ng-deep .p-accordion .p-accordion-content {
+  padding: 0;
+}
+
+::ng-deep .p-accordion .p-accordiontab .p-accordion-tab {
+  margin-bottom: 5px;
+}
+
+.control-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0.5rem 0;
+}
+
+.control-bar .btn {
+  background-color: #183763;
+  color: white;
 }

@@ -7,10 +7,17 @@
     <!-- <div [ngStyle]="{width:isShowSide?'93.3vw':'100vw'}"> -->
     <header>
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg py-3" style="background-color: brown">
-        <app-header style="width: 100%"></app-header>
+      <nav
+        class="navbar navbar-expand-lg py-3"
+        style="background-color: #183763"
+      >
+        <app-header
+          [ngStyle]="{ width: isShowSide ? '92%' : '100%' }"
+        ></app-header>
       </nav>
     </header>
-    <router-outlet></router-outlet>
+    <div style="margin-top: 5.3rem">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

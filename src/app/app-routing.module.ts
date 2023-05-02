@@ -6,7 +6,7 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { AuthGuard } from './Guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/requests', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'home',
     canActivate: [AuthGuard],

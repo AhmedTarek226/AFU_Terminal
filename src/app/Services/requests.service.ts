@@ -17,14 +17,16 @@ export class RequestsService {
   }
 
   getAllRequests(): Observable<any> {
-    return this.http.get(`${environment.apiURL}/getAllRequests`);
+    return this.http.get(
+      `${environment.apiURL}/OnBoardingRequest/getAllRequests`
+    );
     // return this.http.post(this.URL+`/findAudit?page=${pageNo}&size=${size}` , _f );
   }
 
   findRequests(pageNo: any, size: any, _f: any): Observable<any> {
     let newSearchData = this.sharedService.handleObject(_f);
     return this.http.post(
-      `${environment.apiURL}/searchAllRequests/${pageNo}/${size}`,
+      `${environment.apiURL}/OnBoardingRequest/searchAllRequests/${pageNo}/${size}`,
       newSearchData
     );
     // return this.http.post(this.URL+`/findAudit?page=${pageNo}&size=${size}` , _f );
@@ -32,8 +34,24 @@ export class RequestsService {
 
   getSingleRequest(requestId: any): Observable<any> {
     return this.http.post(
-      `${environment.apiURL}/getReqData?reqId=${requestId}`,
+      `${environment.apiURL}/OnBoardingRequest/getReqData?reqId=${requestId}`,
       {}
+    );
+  }
+
+  editRequest(requestId: any, data: any): Observable<any> {
+    let newFormat = [];
+    for (const [key, value] of data) {
+      newFormat.push({
+        attId: key,
+        attVal: value,
+      });
+    }
+    console.log('newFormat -> ', newFormat);
+
+    return this.http.post(
+      `${environment.apiURL}/OnBoardingRequest/editRequestData`,
+      newFormat
     );
   }
 }

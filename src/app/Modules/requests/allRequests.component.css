@@ -87,18 +87,6 @@
   height: 50%;
 }
 
-::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link {
-  padding: 8px;
-}
-
-::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link:focus {
-  box-shadow: 0 0 0 0.08rem #bfdbfe !important;
-}
-
-::ng-deep .p-accordion .p-accordion-content {
-  padding: 6px;
-}
-
 .divScroll {
   max-height: 69vh;
   border: 1px solid #00000026;
@@ -138,4 +126,12 @@
 
 ::ng-deep .p-paginator .p-dropdown .p-dropdown-label {
   padding-right: 10px;
+}
+
+.emptymessage {
+  margin: 0px;
+  padding: 0 10px;
+  font-size: 14px !important;
+  color: red;
+  padding-top: 10px;
 }

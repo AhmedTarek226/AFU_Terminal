@@ -1,26 +1,37 @@
 <header>
   <nav
     class="navbar navbar-expand-lg py-0"
-    style="background-color: #9f3636; height: 64px; color: white"
+    style="
+      background-color: #183763;
+      height: 64px;
+      color: white;
+      position: fixed;
+      width: 100%;
+    "
   >
     <p
       class="text-white mx-auto pt-3"
       style="font-size: 19px !important; font-weight: 400"
     >
-      WFM Rescheduling
+      AFU Terminal
     </p>
   </nav>
 </header>
-<section *ngIf="!isLoading" class="container-fluid" style="padding-top: 5vh">
-  <div>
+<section *ngIf="!isLoading" class="container-fluid" style="padding: 5vh 0">
+  <div style="margin-top: 100px">
     <form
       [formGroup]="loginForm"
       (ngSubmit)="onSubmit()"
       class="container border border-1 rounded-2"
-      style="width: 37%; background-color: white; padding: 40px 40px"
+      style="
+        width: 37%;
+        min-width: 500px;
+        background-color: white;
+        padding: 40px 40px;
+      "
     >
-      <img src="assets/img/hive-work.jpeg" width="100%" height="80%" />
-      <div class="form-outline my-2">
+      <img src="assets/img/networkImage.jpg" width="100%" height="80%" />
+      <div class="form-outline my-2 mt-5">
         <label class="form-label mb-0"
           >{{ "loginForm.username" | translate }} *</label
         >
@@ -75,7 +86,7 @@
       <button
         type="submit"
         class="btn w-100 mt-3 text-light"
-        style="background-color: brown"
+        style="background-color: #183763"
         [disabled]="loginForm.invalid"
       >
         {{ "loginForm.login" | translate }}

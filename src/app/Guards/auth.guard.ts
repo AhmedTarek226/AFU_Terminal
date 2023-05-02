@@ -17,20 +17,20 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    return true;
+    // return true;
     this.auth.setPrevURL(state.url);
     let x = localStorage.getItem('authorities');
     let permissions = [];
-    // if (x) permissions = JSON.parse(x);
-    let currentPage = state.url.slice(1) + '.view';
+    if (x) permissions = JSON.parse(x);
+    let currentPage = state.url.slice(1) + '.View';
 
-    if (currentPage == 'reschedulling.view') {
-      currentPage = 'Scheduling.view';
-      this.auth.setPrevURL('reschedulling');
-    } else if (currentPage == 'audit.view') {
-      currentPage = 'Audit.view';
+    if (currentPage == 'requests.View') {
+      currentPage = 'Requests.View';
+      this.auth.setPrevURL('requests');
+    } else if (currentPage == 'audit.View') {
+      currentPage = 'Audit.View';
       this.auth.setPrevURL('audit');
-    } else if (currentPage == 'home.view') {
+    } else if (currentPage == 'home.View') {
       return true;
     }
 

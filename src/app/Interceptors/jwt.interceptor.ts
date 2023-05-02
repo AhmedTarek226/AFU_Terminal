@@ -30,15 +30,15 @@ export class JwtInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     const authRquest = request.clone({
       setHeaders: {
-        // Host: this.cookie.get('Host'),
-        // Cookie: 'JSESSIONID=' + this.cookie.get('JSESSIONID'),
-        // Referer: 'http://10.19.35.91:8003/SchedulingPortal',
-        // 'Access-Control-Allow-Origin': '*',
-        // 'Access-Control-Allow-Headers': '*',
-        // 'Content-Type': 'application/json',
-        // 'Access-Control-Allow-Credentials': 'true',
-        // 'Access-Control-Allow-Methods':
-        //   'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
+        Host: this.cookie.get('Host'),
+        Cookie: 'JSESSIONID=' + this.cookie.get('JSESSIONID'),
+        Referer: 'http://10.19.35.91:8003/AFUTerminal',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Methods':
+          'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
       },
     });
     // console.log(authRquest.headers.append('X-XSRF-TOKEN', this.cookie.get('tokenRandom')))

@@ -10,9 +10,13 @@ export class HandleVoidValuePipe implements PipeTransform {
       value == null ||
       value === undefined ||
       value === 'Void' ||
-      value == 'void'
+      value == 'void' ||
+      value == 'blank'
     )
       return '---';
+    else if (value.includes('/*$')) {
+      return value.replaceAll('/*$', ',');
+    }
     return value;
   }
 }

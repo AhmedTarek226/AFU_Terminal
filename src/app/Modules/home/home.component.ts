@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
     if (getFromLogin === false) {
       this.cookie.set('Host', window.location.host);
-      // this.automaticLogin();
+      this.automaticLogin();
     }
   }
 
@@ -114,18 +114,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.permisions.haveAuthorities()) {
       this.modules = [
         {
-          name: 'Reschedulling',
-          src: 'assets/img/TaskList.jpg',
-          routerLink: '/reschedulling',
+          name: 'Requests',
+          src: 'fa-arrow-right-arrow-left',
+          routerLink: '/requests',
           // permision: true,
-          permision: this.permisions.havePermisions('Scheduling.view'),
+          permision: this.permisions.havePermisions('Requests.View'),
         },
         {
           name: 'Audit',
-          src: 'assets/img/work-order.jpg',
+          src: 'fa-clock-rotate-left',
           routerLink: '/audit',
           // permision: true,
-          permision: this.permisions.havePermisions('Audit.view'),
+          permision: this.permisions.havePermisions('Audit.View'),
         },
       ];
     } else {
@@ -142,29 +142,4 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     this.sidebarService.isInHome.next(false);
   }
-
-  // automaticLogin() {
-  //   // this.authService.checkLogout.next(true);
-  //   this.authService.checkLogout.subscribe((flag) => {
-  //     if (flag == true) {
-  //       let obj = {
-  //         username: '',
-  //         password: '',
-  //       };
-  //       this.authService.login(obj).subscribe((res: any) => {
-  //         this.authService.getSessionParams(obj).subscribe((res: any) => {
-  //           localStorage.setItem(
-  //             'userModules',
-  //             JSON.stringify(res.userModules)
-  //           );
-  //           localStorage.setItem(
-  //             'authorities',
-  //             JSON.stringify(res.authorities)
-  //           );
-  //           localStorage.setItem('username', res.username);
-  //         });
-  //       });
-  //     }
-  //   });
-  // }
 }

@@ -1,0 +1,88 @@
+<p-table
+  #myTable
+  id="myTable"
+  [value]="rowsData"
+  [paginator]="false"
+  [columns]="selectedColumns"
+  [showCurrentPageReport]="true"
+  sortMode="multiple"
+  [scrollable]="true"
+  scrollHeight="425px"
+  styleClass="p-datatable-sm p-datatable-gridlines"
+  [globalFilterFields]="selectedColumns"
+  [reorderableColumns]="true"
+  [metaKeySelection]="true"
+  responsiveLayout="scroll"
+  selectionMode="multiple"
+  [dataKey]="dataKey"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr *ngIf="columns?.length != 0">
+      <th
+        *ngFor="let col of columns"
+        pReorderableColumn
+        pSortableColumn="{{ col.field }}"
+      >
+        <div class="p-d-flex p-jc-between p-ai-center">
+          {{ col.header }}
+          <!-- <p-sortIcon field="{{ col.field }}"></p-sortIcon> -->
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <!-- <th></th> -->
+      <!-- <th *ngFor="let col of columns">
+        <p-columnFilter type="text" field="{{ col.field }}"></p-columnFilter>
+      </th> -->
+    </tr>
+  </ng-template>
+  <ng-template
+    pTemplate="body"
+    let-rowData
+    let-columns="columns"
+    let-editing="editing"
+  >
+    <tr>
+      <!-- <td>
+        <i
+          class="fa-regular fa-pen-to-square fs-4"
+          data-bs-toggle="modal"
+          data-bs-target="#editRequestModal"
+          (click)="editRequest(rowData['requestId'])"
+        ></i>
+      </td> -->
+      <td
+        *ngFor="let col of columns"
+        [pEditableColumn]="rowData[col.header]"
+        [pEditableColumnField]="rowData[col.field]"
+      >
+        <!-- <span>{{ rowData.get(col.field) | handleVoidValue }} </span> -->
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="newValue"
+              (ngModelChange)="setChanges(rowData, col.field)"
+              class="p-inputtext-sm"
+            />
+          </ng-template>
+          <ng-template pTemplate="output">
+            {{ rowData.get(col.field) | handleVoidValue }}
+          </ng-template>
+        </p-cellEditor>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <!-- <td colspan="4" class="emptymessageTD"> -->
+      <h3 class="emptymessage d-flex justify-content-start">
+        <!-- {{ "requests.requestsList." + msgErrorApi | translate }} -->
+        No data found
+      </h3>
+      <!-- </td> -->
+    </tr>
+  </ng-template>
+</p-table>

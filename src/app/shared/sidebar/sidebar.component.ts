@@ -26,21 +26,14 @@ export class SidebarComponent implements OnInit {
         src: '',
         routerLink: '/requests',
         // permision: true,
-        permision: this.permisions.havePermisions('Requests.view'),
+        permision: this.permisions.havePermisions('Requests.View'),
       },
       {
         name: 'audit',
         src: '',
         routerLink: '/audit',
         // permision: true,
-        permision: this.permisions.havePermisions('Audit.view'),
-      },
-      {
-        name: 'reports',
-        src: '',
-        routerLink: '/reports',
-        // permision: true,
-        permision: this.permisions.havePermisions('Reports.view'),
+        permision: this.permisions.havePermisions('Audit.View'),
       },
     ];
     this.sidebarService.isShow.subscribe((data) => {

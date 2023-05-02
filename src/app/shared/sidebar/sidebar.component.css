@@ -3,7 +3,7 @@ aside {
 }
 
 .sidebar {
-  background-color: brown;
+  background-color: #183763;
   /* height: 100; */
   color: #f1f1f1;
 }
@@ -17,7 +17,7 @@ a:hover {
 }
 
 .active {
-  background-color: rgb(82, 20, 20);
+  background-color: #0e213b;
   border: none;
   /* border-top: 2px solid rgb(224, 224, 224); */
   border-left: 2px solid rgb(224, 224, 224);
@@ -121,7 +121,7 @@ a:hover {
 .section-dropdown1 {
   position: absolute;
   padding: 2px;
-  background-color: #9f3636f2;
+  background-color: #183763;
   top: 40px;
   left: 0;
   width: -moz-fit-content;
