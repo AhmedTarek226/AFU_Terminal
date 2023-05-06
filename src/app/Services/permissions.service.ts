@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class PermisionsService {
   constructor() {}
   havePermisions(permission: string): boolean {
+    // return true;
     let permissions: any = [];
     try {
       let x = localStorage.getItem('authorities');
@@ -23,6 +24,7 @@ export class PermisionsService {
   }
 
   haveAuthorities(): boolean {
+    // return true;
     let permissions: any = [];
     let x = localStorage.getItem('authorities');
     if (x) {

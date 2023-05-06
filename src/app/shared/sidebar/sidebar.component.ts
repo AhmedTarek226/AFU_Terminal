@@ -22,16 +22,16 @@ export class SidebarComponent implements OnInit {
   ) {
     this.routes = [
       {
-        name: 'requests',
+        name: 'Requests',
         src: '',
-        routerLink: '/requests',
+        routerLink: '/Requests',
         // permision: true,
         permision: this.permisions.havePermisions('Requests.View'),
       },
       {
-        name: 'audit',
+        name: 'Audit',
         src: '',
-        routerLink: '/audit',
+        routerLink: '/Audit',
         // permision: true,
         permision: this.permisions.havePermisions('Audit.View'),
       },

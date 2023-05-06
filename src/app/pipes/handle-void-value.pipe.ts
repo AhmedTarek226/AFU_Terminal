@@ -11,7 +11,8 @@ export class HandleVoidValuePipe implements PipeTransform {
       value === undefined ||
       value === 'Void' ||
       value == 'void' ||
-      value == 'blank'
+      value == 'blank' ||
+      value == ''
     )
       return '---';
     else if (value.includes('/*$')) {

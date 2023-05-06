@@ -10,9 +10,9 @@ import { HandleVoidValuePipe } from 'src/app/pipes/handle-void-value.pipe';
 import { SingleRequestComponent } from './single-request/single-request.component';
 
 const routes: Routes = [
-  { path: 'requests', component: AllRequestsComponent },
+  { path: 'Requests', component: AllRequestsComponent },
   {
-    path: 'requests/:id',
+    path: 'Requests/:id',
     component: SingleRequestComponent,
     pathMatch: 'full',
   },

@@ -29,7 +29,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'audit',
+    path: 'Audit',
     component: MainlayoutComponent,
     canActivate: [AuthGuard],
     children: [

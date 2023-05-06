@@ -33,9 +33,9 @@
   },
   "sideBar": {
     "home": "Home",
-    "requests": "Requests",
-    "audit": "Audit",
-    "reports": "Reports"
+    "Requests": "Requests",
+    "Audit": "Audit",
+    "Reports": "Reports"
   },
   "requests": {
     "search": {
