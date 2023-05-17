@@ -1,4 +1,11 @@
 <div class="container-fluid mx-0 px-2 py-2">
+  <div
+    class="btn-bar"
+    data-bs-toggle="modal"
+    data-bs-target="#importFromJiraModal"
+  >
+    <button class="btn">Import from jira</button>
+  </div>
   <app-search
     (searchData)="getDoneSearch($event)"
     (clearView)="reset()"
@@ -129,7 +136,7 @@
               <td>
                 <i
                   class="fa-regular fa-pen-to-square fs-4"
-                  [routerLink]="['/requests', rowData['requestId']]"
+                  [routerLink]="['/Requests', rowData['requestId']]"
                 ></i>
                 <!-- (click)="editRequest(rowData['requestId'])" -->
               </td>
@@ -160,5 +167,53 @@
         <!-- <app-edit-request [requestData]="requestData"></app-edit-request> -->
       </div>
     </ng-container>
+  </div>
+</div>
+
+<!-- import from jira modal -->
+
+<div class="modal fade" id="importFromJiraModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Enter Issue Key</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="issueKey"
+          style="width: 50%"
+        />
+        <span *ngIf="showError" class="text-danger" style="margin-top: 8px"
+          >Enter Valid Key</span
+        >
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          #closeModalButton
+          (click)="resetModalValue()"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn"
+          style="background-color: var(--main-color); color: white"
+          (click)="importFromJira()"
+        >
+          Import
+        </button>
+      </div>
+    </div>
   </div>
 </div>

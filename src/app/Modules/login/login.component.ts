@@ -145,7 +145,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   routing1 = ['/', '', '/error'];
-  routing2 = ['home', 'reschedulling', 'audit'];
+  routing2 = ['home', 'Requests', 'Audit'];
   getSessionParams(_f: any, response: any) {
     let sub = this.authService.getSessionParams(_f).subscribe({
       next: (res: any) => {
@@ -169,7 +169,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           previousUrl.value === '/' ||
           previousUrl.value === '' ||
           previousUrl.value === '/error' ||
-          !this.routing2.includes(previousUrl.value)
+          !this.routing2.includes(previousUrl.value.split('/')[0])
         ) {
           // this.authService.setPrevURL('login');
           this.router.navigate(['/home']);

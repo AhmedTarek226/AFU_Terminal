@@ -10,6 +10,14 @@
   padding: 6px;
 }
 
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 7px;
+}
+
 .divScroll {
   max-height: 65vh;
   border: 1px solid #00000026;
@@ -129,4 +137,17 @@
   font-size: 14px !important;
   color: red;
   padding-top: 10px;
+}
+
+.btn-bar :first-child {
+  background-color: var(--main-color);
+  color: white;
+  font-size: 14px !important;
+  padding: 5px 18px;
+}
+
+.btn-bar {
+  display: flex;
+  justify-content: end;
+  padding-bottom: 10px;
 }

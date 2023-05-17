@@ -116,14 +116,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         {
           name: 'Requests',
           src: 'fa-arrow-right-arrow-left',
-          routerLink: '/requests',
+          routerLink: '/Requests',
           // permision: true,
           permision: this.permisions.havePermisions('Requests.View'),
         },
         {
           name: 'Audit',
           src: 'fa-clock-rotate-left',
-          routerLink: '/audit',
+          routerLink: '/Audit',
           // permision: true,
           permision: this.permisions.havePermisions('Audit.View'),
         },

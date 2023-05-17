@@ -30,9 +30,6 @@ export class JwtInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     const authRquest = request.clone({
       setHeaders: {
-        Host: this.cookie.get('Host'),
-        Cookie: 'JSESSIONID=' + this.cookie.get('JSESSIONID'),
-        Referer: 'http://10.19.35.91:8003/AFUTerminal',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
         'Content-Type': 'application/json',

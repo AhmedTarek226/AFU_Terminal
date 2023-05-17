@@ -54,4 +54,10 @@ export class RequestsService {
       newFormat
     );
   }
+
+  importFromJira(issueKey: string): Observable<any> {
+    return this.http.get(
+      `${environment.apiURL}/JiraClient/GetIssue?issueKey=${issueKey}`
+    );
+  }
 }

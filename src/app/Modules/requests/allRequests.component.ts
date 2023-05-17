@@ -33,6 +33,8 @@ export class AllRequestsComponent implements OnInit {
   selectedcols: any[] = [];
   _selectedColumns: any[] = [];
   totalRow: number = 10;
+  issueKey: string = '';
+  @ViewChild('closeModalButton') closeModalButton: any;
   constructor(
     private requestsService: RequestsService,
     private sharedService: SharedService,
@@ -208,7 +210,39 @@ export class AllRequestsComponent implements OnInit {
     }
   }
 
+  showError: boolean = false;
+  importFromJira() {
+    if (this.issueKey == '') {
+      this.showError = true;
+    } else {
+      this.requestsService.importFromJira(this.issueKey).subscribe({
+        next: (res) => {
+          if (res.statusCode == 1) {
+            this.toastService.showSuccess(res.status, res.clientMessage);
+          } else if (res.statusCode == -1) {
+            this.toastService.showError(res.status, res.clientMessage);
+          } else {
+            this.toastService.showError('Error', 'Failed to get issue !!');
+          }
+        },
+        error: (err) => {
+          this.toastService.showError('Error', 'Failed to get issue !!');
+        },
+        complete: () => {
+          this.showError = false;
+          this.closeModalButton.nativeElement.click();
+        },
+      });
+    }
+  }
+  resetModalValue() {
+    this.issueKey = '';
+    this.showError = false;
+  }
+
   ngOnDestroy(): void {
+    // this.reset();
+    this.resetModalValue();
     for (let sub of this.subscriptions) {
       sub.unsubscribe();
     }
