@@ -42,17 +42,19 @@ export class JwtInterceptor implements HttpInterceptor {
 
     return next.handle(authRquest).pipe(
       tap(
-        (event) => {},
+        (event) => {
+          this.checkResponse(event);
+        },
         (error) => {
           // console.error(error);
-          let lang = JSON.parse(sessionStorage.getItem('language') || '');
+          // let lang = JSON.parse(sessionStorage.getItem('language') || '');
           if (!navigator.onLine) {
             this.toastService.clear();
-            if (lang == 'en') {
-              this.toastService.showError('Error', `You are offline`);
-            } else {
-              this.toastService.showError('خطأ', `غير متصل بالانترنت`);
-            }
+            this.toastService.showError('Error', `You are offline`);
+            // if (lang == 'en') {
+            // } else {
+            //   this.toastService.showError('خطأ', `غير متصل بالانترنت`);
+            // }
           }
           if (
             error?.message == 'You Are Logged Out because of Timeout' ||
@@ -66,11 +68,11 @@ export class JwtInterceptor implements HttpInterceptor {
             localStorage.clear();
             this.cookie.deleteAll();
 
-            if (lang == 'en') {
-              this.toastService.showError('Error', `${err}`);
-            } else {
-              this.toastService.showError('خطأ', `انتهت صلاحية الجلسة`);
-            }
+            // if (lang == 'en') {
+            this.toastService.showError('Error', `${err}`);
+            // } else {
+            //   this.toastService.showError('خطأ', `انتهت صلاحية الجلسة`);
+            // }
           } else if (
             (error?.status == 403 ||
               error?.status == 401 ||
@@ -83,5 +85,18 @@ export class JwtInterceptor implements HttpInterceptor {
         }
       )
     );
+  }
+
+  checkResponse(response: any) {
+    console.log('reponse: ', response);
+    if (
+      (response?.status == 403 ||
+        response?.status == 401 ||
+        response?.status == 429) &&
+      !window.location.href.endsWith('/#/login') &&
+      !window.location.href.endsWith('/login')
+    ) {
+      this.sharedService.logout();
+    }
   }
 }

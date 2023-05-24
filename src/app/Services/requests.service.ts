@@ -16,9 +16,9 @@ export class RequestsService {
       .pipe(retry(1), catchError(this.sharedService.handleHttpError));
   }
 
-  getAllRequests(): Observable<any> {
+  getAllRequests(pageNo: any, size: any): Observable<any> {
     return this.http.get(
-      `${environment.apiURL}/OnBoardingRequest/getAllRequests`
+      `${environment.apiURL}/OnBoardingRequest/getAllRequests/${pageNo}/${size}`
     );
     // return this.http.post(this.URL+`/findAudit?page=${pageNo}&size=${size}` , _f );
   }

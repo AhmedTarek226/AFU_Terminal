@@ -18,7 +18,7 @@ export class AllRequestsComponent implements OnInit {
   requestsList: IRequestDetails[];
   showSearchError: boolean;
   subscriptions: Subscription[];
-  firstExcecute: boolean = true;
+  // firstExcecute: boolean = true;
   @ViewChild('paginator', { static: true }) paginator!: Paginator;
   @ViewChild('requestsTable') myTable: any;
   dataID: any;
@@ -45,10 +45,6 @@ export class AllRequestsComponent implements OnInit {
     this.subscriptions = [];
     this.requestsList = [];
     this.msgErrorApi = 'noRequestsFound';
-    let sub = translateService.onLangChange.subscribe((data: any) => {
-      this.ngOnInit();
-    });
-    // this.subscriptions.push(sub);
 
     this.paginatorObj = {
       rows: this.searchSize,
@@ -92,27 +88,7 @@ export class AllRequestsComponent implements OnInit {
     ];
     this.selectedcols = this.cols.filter((col: any) => col.display == 1);
     this._selectedColumns = this.selectedcols;
-    this.requestsService.getAllRequests().subscribe(
-      (Response: any) => {
-        if (Response?.length == 0) {
-          if (this.translateService.currentLang == 'ar')
-            this.toastService.showWarn('عذرًا', 'لا يوجد معلومات');
-          else this.toastService.showWarn('Warning', 'No Data Found');
-        }
-        this.requestsList = Response;
-        console.log(this.requestsList);
-
-        this.paginatorObj['totalRecords'] = Response.totalElements;
-        console.log('this.paginatorObj');
-        console.log(this.paginatorObj);
-        this.loading = false;
-      },
-      (error: any) => {
-        this.msgErrorApi = 'errorMsg';
-
-        this.loading = false;
-      }
-    );
+    this.getRequests(0, this.searchSize);
   }
 
   @Input() get selectedColumns(): any[] {
@@ -153,36 +129,53 @@ export class AllRequestsComponent implements OnInit {
   paginate(changes: any) {
     this.searchSize = changes.rows;
     if (Object.keys(this.paginateSearchObj).length > 0) {
-      this.getAllRequests(changes.page, changes.rows, this.paginateSearchObj);
+      this.findRequests(changes.page, changes.rows, this.paginateSearchObj);
+    } else {
+      this.getRequests(changes.page, changes.rows);
     }
   }
-  loading: boolean = false;
-  getAllRequests(pageNumber: number, pageSize: number, _fdata: any) {
+  findRequests(pageNumber: number, pageSize: number, _fdata: any) {
     console.log('search object -> ', _fdata);
-
-    this.loading = true;
     this.requestsList = [];
-    this.subs = this.requestsService
+    let sub = this.requestsService
       .findRequests(pageNumber, pageSize, _fdata)
       .subscribe(
         (Response: any) => {
-          if (Response?.length == 0) {
-            if (this.translateService.currentLang == 'ar')
-              this.toastService.showWarn('عذرًا', 'لا يوجد معلومات');
-            else this.toastService.showWarn('Warning', 'No Data Found');
-          }
-          this.requestsList = Response.content;
-          this.paginatorObj['totalRecords'] = Response.totalElements;
-          console.log('this.paginatorObj');
-          console.log(this.paginatorObj);
-          this.loading = false;
+          this.setResponse(Response);
         },
         (error: any) => {
           this.msgErrorApi = 'errorMsg';
-
-          this.loading = false;
         }
       );
+    this.subscriptions.push(sub);
+  }
+  getRequests(pageNumber: number, pageSize: number) {
+    this.requestsList = [];
+    let sub = this.requestsService
+      .getAllRequests(pageNumber, pageSize)
+      .subscribe({
+        next: (Response: any) => {
+          this.setResponse(Response);
+        },
+
+        error: (error: any) => {
+          this.msgErrorApi = 'errorMsg';
+        },
+      });
+
+    this.subscriptions.push(sub);
+  }
+
+  setResponse(response: any) {
+    if (response?.length == 0) {
+      if (this.translateService.currentLang == 'ar')
+        this.toastService.showWarn('عذرًا', 'لا يوجد معلومات');
+      else this.toastService.showWarn('Warning', 'No Data Found');
+    }
+    this.requestsList = response?.content;
+    this.paginatorObj['totalRecords'] = response?.totalElements;
+    // console.log('this.paginatorObj');
+    // console.log(this.paginatorObj);
   }
 
   exportExcel() {
@@ -196,7 +189,6 @@ export class AllRequestsComponent implements OnInit {
     if (JSON.stringify($event) === JSON.stringify({})) {
       if (this.subs.closed === false) {
         this.subs.unsubscribe();
-        this.loading = false;
       }
       this.paginateSearchObj = {};
       return;
@@ -206,7 +198,9 @@ export class AllRequestsComponent implements OnInit {
 
     this.paginateSearchObj = this.objectbySearch;
     if (Object.keys(this.objectbySearch).length > 0) {
-      this.getAllRequests(0, this.searchSize, this.objectbySearch);
+      this.findRequests(0, this.searchSize, this.objectbySearch);
+    } else {
+      this.getRequests(0, this.searchSize);
     }
   }
 
