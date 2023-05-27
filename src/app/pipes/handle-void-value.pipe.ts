@@ -9,8 +9,6 @@ export class HandleVoidValuePipe implements PipeTransform {
       value == '?????' ||
       value == null ||
       value === undefined ||
-      value === 'Void' ||
-      value == 'void' ||
       value == 'blank' ||
       value == ''
     )

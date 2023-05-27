@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RequestsService } from 'src/app/Services/requests.service';
 import { GenerateFormComponent } from './generate-form/generate-form.component';
 import { GenerateTableComponent } from './generate-table/generate-table.component';
+import { ToastService } from 'src/app/Services/toast.service';
 
 @Component({
   selector: 'app-single-request',
@@ -18,7 +19,8 @@ export class SingleRequestComponent {
   generateTableComponent!: GenerateTableComponent;
   constructor(
     private requestsService: RequestsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastService: ToastService
   ) {}
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -41,9 +43,37 @@ export class SingleRequestComponent {
       ...this.generateFormComponent?.updatedAttributes,
       ...this.generateTableComponent?.updatedAttributes,
     ]);
+
+    let newUpdatedAttributes = this.handleUpdatedAttributes(updatedAttributes);
     console.log('updatedAttributes', updatedAttributes.entries());
-    this.requestsService
-      .editRequest(this.requestId, updatedAttributes)
-      .subscribe((res: any) => console.log(res));
+    if (newUpdatedAttributes.length == 0) {
+      this.toastService.showWarn('Warning', 'No Changes Available');
+      return;
+    }
+    this.requestsService.editRequest(newUpdatedAttributes).subscribe({
+      next: (res: any) => {
+        // console.log(res)
+        if (res.statusCode == 200) {
+          this.toastService.showSuccess(
+            'Success',
+            'Changes Updated Successfully'
+          );
+        }
+      },
+      error: (err) => {
+        this.toastService.showError('ERROR', 'Unknown Error !!');
+      },
+    });
+  }
+
+  handleUpdatedAttributes(updatedAttributes: Map<any, any>) {
+    let newFormat = [];
+    for (const [key, value] of updatedAttributes) {
+      newFormat.push({
+        attId: key,
+        attVal: value,
+      });
+    }
+    return newFormat;
   }
 }

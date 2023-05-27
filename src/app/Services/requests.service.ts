@@ -39,19 +39,10 @@ export class RequestsService {
     );
   }
 
-  editRequest(requestId: any, data: any): Observable<any> {
-    let newFormat = [];
-    for (const [key, value] of data) {
-      newFormat.push({
-        attId: key,
-        attVal: value,
-      });
-    }
-    console.log('newFormat -> ', newFormat);
-
+  editRequest(data: any): Observable<any> {
     return this.http.post(
       `${environment.apiURL}/OnBoardingRequest/editRequestData`,
-      newFormat
+      data
     );
   }
 

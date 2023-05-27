@@ -88,7 +88,7 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 
   checkResponse(response: any) {
-    console.log('reponse: ', response);
+    // console.log('reponse: ', response);
     if (
       (response?.status == 403 ||
         response?.status == 401 ||
