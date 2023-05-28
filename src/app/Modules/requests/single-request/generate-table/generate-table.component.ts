@@ -65,10 +65,13 @@ export class GenerateTableComponent implements OnInit {
 
       // handle empty rows
       let pushOutput = false;
-      for (let j = 0; j < Object.keys(this.output).length; j++) {
+      for (let j = 0; j < this.output.size; j++) {
+        let value = this.output.get(Array.from(this.output.keys())[j]);
         if (
-          this.output.get(Object.keys(this.output)[j]) == '' ||
-          this.output.get(Object.keys(this.output)[j]) == 'blank'
+          value == '' ||
+          value == 'blank' ||
+          value == undefined ||
+          value == null
         ) {
           continue;
         } else {
