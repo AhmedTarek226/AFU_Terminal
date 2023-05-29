@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SharedService } from 'src/app/Services/shared.service';
+import { SingleRequestComponent } from '../single-request.component';
 declare var $: any;
 
 interface IRowData {
@@ -41,7 +42,7 @@ export class GenerateTableComponent implements OnInit {
   totalRow: number = 10;
   output: Map<any, any> = new Map();
   ids: Map<any, any> = new Map();
-  newValue: any;
+  newValue: string | null = null;
   ngOnInit(): void {
     this.sectionDetails?.attributes.map((val: any) => {
       this.headers.push(val.attName);
@@ -99,23 +100,29 @@ export class GenerateTableComponent implements OnInit {
   }
 
   updatedAttributes: Map<any, any> = new Map();
-  setChanges(rowData: any, field: any) {
-    // console.log('ID -> ', this.ids.get(field));
-    // console.log('rowdata -> ', rowData);
-    // console.log('field -> ', field);
-    // console.log('New Value -> ', this.newValue);
-    rowData.set(field, this.newValue);
-    // console.log('Rows Data -> ', this.rowsData);
-    let lastUpdatedValue = '';
-    for (let row of this.rowsData) {
-      lastUpdatedValue += row.get(field) + '/*$';
-      // row.get(field);
-    }
-    this.updatedAttributes.set(this.ids.get(field), lastUpdatedValue);
-    // console.log('updated Attributes -> ', this.updatedAttributes);
+  // setChanges(rowData: any, field: any) {
+  //   // console.log('ID -> ', this.ids.get(field));
+  //   // console.log('rowdata -> ', rowData);
+  //   // console.log('field -> ', field);
+  //   // console.log('New Value -> ', this.newValue);
+  //   rowData.set(field, this.newValue);
+  //   // console.log('Rows Data -> ', this.rowsData);
+  //   let lastUpdatedValue = '';
+  //   for (let row of this.rowsData) {
+  //     lastUpdatedValue += row.get(field) + '/*$';
+  //     // row.get(field);
+  //   }
+  //   this.updatedAttributes.set(this.ids.get(field), lastUpdatedValue);
+  //   // console.log('updated Attributes -> ', this.updatedAttributes);
 
-    this.newValue = '';
-    // this.updatedAttributes.set(attribute.id, attribute.attValue);
+  //   this.newValue = '';
+  //   // this.updatedAttributes.set(attribute.id, attribute.attValue);
+  // }
+  @ViewChild(SingleRequestComponent) singleRequest!: SingleRequestComponent;
+  setChanges(rowData: any, field: any) {
+    rowData.set(field, this.newValue);
+    this.singleRequest.editTableValue(this.rowsData, field, this.ids);
+    this.newValue = null;
   }
   @Input() get selectedColumns(): any[] {
     return this._selectedColumns;

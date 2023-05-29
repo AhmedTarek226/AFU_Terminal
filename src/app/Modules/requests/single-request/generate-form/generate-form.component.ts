@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import { SingleRequestComponent } from '../single-request.component';
 
 @Component({
   selector: 'app-generate-form',
@@ -34,10 +41,9 @@ export class GenerateFormComponent implements OnChanges {
     return this.readOnlyList.includes(id);
   }
 
-  updatedAttributes: Map<any, any> = new Map();
+  // updatedAttributes: Map<any, any> = new Map();
+  @ViewChild(SingleRequestComponent) singleRequest!: SingleRequestComponent;
   editAttributeValue(attribute: any) {
-    // console.log('attribute', attribute);
-    this.updatedAttributes.set(attribute.id, attribute.attValue);
-    // console.log('updated attributes', this.updatedAttributes);
+    this.singleRequest.editFormValue(attribute);
   }
 }

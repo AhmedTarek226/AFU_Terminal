@@ -17,6 +17,8 @@ export class SingleRequestComponent {
   generateFormComponent!: GenerateFormComponent;
   @ViewChild(GenerateTableComponent)
   generateTableComponent!: GenerateTableComponent;
+  updatedAttributes: Map<any, any> = new Map();
+
   constructor(
     private requestsService: RequestsService,
     private route: ActivatedRoute,
@@ -38,14 +40,28 @@ export class SingleRequestComponent {
     });
   }
 
+  editFormValue(attribute: any) {
+    this.updatedAttributes.set(attribute.id, attribute.attValue);
+  }
+  editTableValue(rowsData: any, field: any, ids: any) {
+    let lastUpdatedValue = '';
+    for (let row of rowsData) {
+      lastUpdatedValue += row.get(field) + '/*$';
+    }
+    this.updatedAttributes.set(ids.get(field), lastUpdatedValue);
+    this.updatedAttributes.set(ids.get(field), lastUpdatedValue);
+  }
   updateChanges() {
-    let updatedAttributes = new Map([
-      ...this.generateFormComponent?.updatedAttributes,
-      ...this.generateTableComponent?.updatedAttributes,
-    ]);
+    // this.updatedAttributes.set
+    // let updatedAttributes = new Map([
+    //   ...this.generateFormComponent?.updatedAttributes,
+    //   ...this.generateTableComponent?.updatedAttributes,
+    // ]);
 
-    let newUpdatedAttributes = this.handleUpdatedAttributes(updatedAttributes);
-    console.log('updatedAttributes', updatedAttributes.entries());
+    let newUpdatedAttributes = this.handleUpdatedAttributes(
+      this.updatedAttributes
+    );
+    console.log('updatedAttributes', this.updatedAttributes.entries());
     if (newUpdatedAttributes.length == 0) {
       this.toastService.showWarn('Warning', 'No Changes Available');
       return;
@@ -62,6 +78,9 @@ export class SingleRequestComponent {
       },
       error: (err) => {
         this.toastService.showError('ERROR', 'Unknown Error !!');
+      },
+      complete: () => {
+        this.updatedAttributes.clear();
       },
     });
   }
