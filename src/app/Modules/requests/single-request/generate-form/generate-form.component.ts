@@ -6,6 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { SingleRequestComponent } from '../single-request.component';
+import { RequestsService } from 'src/app/Services/requests.service';
 
 @Component({
   selector: 'app-generate-form',
@@ -17,7 +18,7 @@ export class GenerateFormComponent implements OnChanges {
   @Input() sectionDetails: any;
   readOnlyList: any[] = [];
 
-  constructor() {}
+  constructor(private requestsService: RequestsService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     // let att = 'Visa/*$MasterCard/*$Amex7/*$SamsungPay/*$';
@@ -42,8 +43,8 @@ export class GenerateFormComponent implements OnChanges {
   }
 
   // updatedAttributes: Map<any, any> = new Map();
-  @ViewChild(SingleRequestComponent) singleRequest!: SingleRequestComponent;
+  // @ViewChild(SingleRequestComponent) singleRequest!: SingleRequestComponent;
   editAttributeValue(attribute: any) {
-    this.singleRequest.editFormValue(attribute);
+    this.requestsService.editFormValue(attribute);
   }
 }

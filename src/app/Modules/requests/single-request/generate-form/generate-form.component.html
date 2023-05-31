@@ -34,11 +34,12 @@
           </p> -->
       <!-- <p class="card-text fst-normal"> -->
       <!-- <span *ngIf="attribute.attValue">{{ attribute.attValue }}</span> -->
+      <!-- [ngStyle]="{
+          width: isReadOnly(attribute.id) ? '-webkit-fill-available' : 'auto'
+        }" -->
       <input
         [readonly]="isReadOnly(attribute.id)"
-        [ngStyle]="{
-          width: isReadOnly(attribute.id) ? '-webkit-fill-available' : 'auto'
-        }"
+        [style.width.px]="attribute?.attValue?.length * 7.24"
         type="text"
         pInputText
         [(ngModel)]="attribute.attValue"
@@ -51,3 +52,46 @@
     </div>
   </div>
 </div>
+
+<!-- <h3
+  *ngIf="
+    !this.sectionDetails.attributes ||
+    this.sectionDetails.attributes.length == 0
+  "
+  class="emptymessage"
+>
+  No data found for this section
+</h3>
+<div
+  class="container py-0"
+  *ngIf="
+    this.sectionDetails.attributes && this.sectionDetails.attributes.length > 0
+  "
+>
+  <div class="row row-cols-3 p-0 m-0 py-2 align-items-center gy-1">
+    <div
+      *ngFor="let attribute of sectionDetails.attributes; index as i"
+      class="col d-flex align-items-center"
+      style="line-height: 14px"
+    >
+      <div class="card-container">
+        <p class="card-text">
+          {{ attribute.attName }}
+        </p>
+      </div>
+    
+      <input
+        *ngIf="!isReadOnly(attribute.id); else readOnlyValue"
+        style="width: auto"
+        type="text"
+        pInputText
+        [(ngModel)]="attribute.attValue"
+        (ngModelChange)="editAttributeValue(attribute)"
+      />
+      <ng-template #readOnlyValue>
+        <span style="width: auto">{{ attribute.attValue }}</span>
+      </ng-template>
+   
+    </div>
+  </div>
+</div> -->

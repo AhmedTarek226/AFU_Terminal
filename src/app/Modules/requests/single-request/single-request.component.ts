@@ -17,7 +17,7 @@ export class SingleRequestComponent {
   generateFormComponent!: GenerateFormComponent;
   @ViewChild(GenerateTableComponent)
   generateTableComponent!: GenerateTableComponent;
-  updatedAttributes: Map<any, any> = new Map();
+  // updatedAttributes: Map<any, any> = new Map();
 
   constructor(
     private requestsService: RequestsService,
@@ -40,17 +40,17 @@ export class SingleRequestComponent {
     });
   }
 
-  editFormValue(attribute: any) {
-    this.updatedAttributes.set(attribute.id, attribute.attValue);
-  }
-  editTableValue(rowsData: any, field: any, ids: any) {
-    let lastUpdatedValue = '';
-    for (let row of rowsData) {
-      lastUpdatedValue += row.get(field) + '/*$';
-    }
-    this.updatedAttributes.set(ids.get(field), lastUpdatedValue);
-    this.updatedAttributes.set(ids.get(field), lastUpdatedValue);
-  }
+  // editFormValue(attribute: any) {
+  //   this.updatedAttributes.set(attribute.id, attribute.attValue);
+  // }
+  // editTableValue(rowsData: any, field: any, ids: any) {
+  //   let lastUpdatedValue = '';
+  //   for (let row of rowsData) {
+  //     lastUpdatedValue += row.get(field) + '/*$';
+  //   }
+  //   this.updatedAttributes.set(ids.get(field), lastUpdatedValue);
+  //   // this.updatedAttributes.set(ids.get(field), lastUpdatedValue);
+  // }
   updateChanges() {
     // this.updatedAttributes.set
     // let updatedAttributes = new Map([
@@ -58,41 +58,35 @@ export class SingleRequestComponent {
     //   ...this.generateTableComponent?.updatedAttributes,
     // ]);
 
-    let newUpdatedAttributes = this.handleUpdatedAttributes(
-      this.updatedAttributes
-    );
-    console.log('updatedAttributes', this.updatedAttributes.entries());
-    if (newUpdatedAttributes.length == 0) {
-      this.toastService.showWarn('Warning', 'No Changes Available');
-      return;
-    }
-    this.requestsService.editRequest(newUpdatedAttributes).subscribe({
-      next: (res: any) => {
-        // console.log(res)
-        if (res.statusCode == 200) {
-          this.toastService.showSuccess(
-            'Success',
-            'Changes Updated Successfully'
-          );
-        }
-      },
-      error: (err) => {
-        this.toastService.showError('ERROR', 'Unknown Error !!');
-      },
-      complete: () => {
-        this.updatedAttributes.clear();
-      },
-    });
-  }
+    // let newUpdatedAttributes = this.handleUpdatedAttributes(
+    //   this.updatedAttributes
+    // );
+    // console.log('updatedAttributes', this.updatedAttributes.entries());
+    // if (newUpdatedAttributes.length == 0) {
+    //   this.toastService.showWarn('Warning', 'No Changes Available');
+    //   return;
+    // }
 
-  handleUpdatedAttributes(updatedAttributes: Map<any, any>) {
-    let newFormat = [];
-    for (const [key, value] of updatedAttributes) {
-      newFormat.push({
-        attId: key,
-        attVal: value,
+    if (!this.requestsService.editRequest()) {
+      this.toastService.showWarn('Warning', 'No Changes Available');
+    } else {
+      this.requestsService.editRequest()?.subscribe({
+        next: (res: any) => {
+          // console.log(res)
+          if (res?.statusCode == 200) {
+            this.toastService.showSuccess(
+              'Success',
+              'Changes Updated Successfully'
+            );
+          }
+        },
+        error: (err) => {
+          this.toastService.showError('ERROR', 'Unknown Error !!');
+        },
+        complete: () => {
+          this.requestsService.updatedAttributes.clear();
+        },
       });
     }
-    return newFormat;
   }
 }

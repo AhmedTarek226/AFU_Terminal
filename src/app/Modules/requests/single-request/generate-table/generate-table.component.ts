@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SharedService } from 'src/app/Services/shared.service';
 import { SingleRequestComponent } from '../single-request.component';
+import { RequestsService } from 'src/app/Services/requests.service';
 declare var $: any;
 
 interface IRowData {
@@ -31,7 +32,10 @@ export class GenerateTableComponent implements OnInit {
   tableId: string;
   dataKey: string;
   @ViewChild('myTable') myTable: any;
-  constructor(private sharedService: SharedService) {
+  constructor(
+    private sharedService: SharedService,
+    private requestsService: RequestsService
+  ) {
     this.tableId = this.sectionDetails?.sectionId;
     this.dataKey = 'merchantId';
   }
@@ -118,10 +122,10 @@ export class GenerateTableComponent implements OnInit {
   //   this.newValue = '';
   //   // this.updatedAttributes.set(attribute.id, attribute.attValue);
   // }
-  @ViewChild(SingleRequestComponent) singleRequest!: SingleRequestComponent;
+  // @ViewChild(SingleRequestComponent) singleRequest!: SingleRequestComponent;
   setChanges(rowData: any, field: any) {
     rowData.set(field, this.newValue);
-    this.singleRequest.editTableValue(this.rowsData, field, this.ids);
+    this.requestsService.editTableValue(this.rowsData, field, this.ids);
     this.newValue = null;
   }
   @Input() get selectedColumns(): any[] {

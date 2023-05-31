@@ -34,6 +34,7 @@ export class AllRequestsComponent implements OnInit {
   _selectedColumns: any[] = [];
   totalRow: number = 10;
   issueKey: string = '';
+  loading: boolean = false;
   @ViewChild('closeModalButton') closeModalButton: any;
   constructor(
     private requestsService: RequestsService,
@@ -136,20 +137,27 @@ export class AllRequestsComponent implements OnInit {
   }
   findRequests(pageNumber: number, pageSize: number, _fdata: any) {
     console.log('search object -> ', _fdata);
+    this.loading = true;
+
     this.requestsList = [];
     let sub = this.requestsService
       .findRequests(pageNumber, pageSize, _fdata)
-      .subscribe(
-        (Response: any) => {
+      .subscribe({
+        next: (Response: any) => {
           this.setResponse(Response);
         },
-        (error: any) => {
+        error: (err: any) => {
           this.msgErrorApi = 'errorMsg';
-        }
-      );
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
     this.subscriptions.push(sub);
   }
   getRequests(pageNumber: number, pageSize: number) {
+    this.loading = true;
+
     this.requestsList = [];
     let sub = this.requestsService
       .getAllRequests(pageNumber, pageSize)
@@ -157,9 +165,11 @@ export class AllRequestsComponent implements OnInit {
         next: (Response: any) => {
           this.setResponse(Response);
         },
-
-        error: (error: any) => {
+        error: (err: any) => {
           this.msgErrorApi = 'errorMsg';
+        },
+        complete: () => {
+          this.loading = false;
         },
       });
 
@@ -189,6 +199,7 @@ export class AllRequestsComponent implements OnInit {
     if (JSON.stringify($event) === JSON.stringify({})) {
       if (this.subs.closed === false) {
         this.subs.unsubscribe();
+        this.loading = false;
       }
       this.paginateSearchObj = {};
       return;

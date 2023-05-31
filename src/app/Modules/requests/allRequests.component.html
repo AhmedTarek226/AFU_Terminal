@@ -27,6 +27,7 @@
           [scrollable]="true"
           scrollHeight="340px"
           styleClass="p-datatable-sm p-datatable-gridlines"
+          [loading]="loading"
           [globalFilterFields]="[
             'requestId',
             'templateId',
@@ -156,8 +157,8 @@
             </td>
           </ng-template>
         </p-table>
+        <!-- *ngIf="requestsList && requestsList.length > 0" -->
         <p-paginator
-          *ngIf="requestsList && requestsList.length > 0"
           [rows]="paginatorObj['rows']"
           [totalRecords]="paginatorObj['totalRecords']"
           [rowsPerPageOptions]="paginatorObj['rowsPerPageOptions']"

@@ -39,16 +39,49 @@ export class RequestsService {
     );
   }
 
-  editRequest(data: any): Observable<any> {
+  editRequest(): Observable<any> | null {
+    let newUpdatedAttributes = this.handleUpdatedAttributes(
+      this.updatedAttributes
+    );
+    console.log('updatedAttributes', this.updatedAttributes.entries());
+    if (newUpdatedAttributes.length == 0) {
+      // this.toastService.showWarn('Warning', 'No Changes Available');
+      return null;
+    }
     return this.http.post(
       `${environment.apiURL}/OnBoardingRequest/editRequestData`,
-      data
+      newUpdatedAttributes
     );
+  }
+
+  handleUpdatedAttributes(updatedAttributes: Map<any, any>) {
+    let newFormat = [];
+    for (const [key, value] of updatedAttributes) {
+      newFormat.push({
+        attId: key,
+        attVal: value,
+      });
+    }
+    return newFormat;
   }
 
   importFromJira(issueKey: string): Observable<any> {
     return this.http.get(
       `${environment.apiURL}/JiraClient/GetIssue?issueKey=${issueKey}`
     );
+  }
+
+  updatedAttributes: Map<any, any> = new Map();
+  editFormValue(attribute: any) {
+    this.updatedAttributes.set(attribute.id, attribute.attValue);
+  }
+
+  editTableValue(rowsData: any, field: any, ids: any) {
+    let lastUpdatedValue = '';
+    for (let row of rowsData) {
+      lastUpdatedValue += row.get(field) + '/*$';
+    }
+    this.updatedAttributes.set(ids.get(field), lastUpdatedValue);
+    // this.updatedAttributes.set(ids.get(field), lastUpdatedValue);
   }
 }
