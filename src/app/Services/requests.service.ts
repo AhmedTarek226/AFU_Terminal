@@ -59,7 +59,8 @@ export class RequestsService {
     for (const [key, value] of updatedAttributes) {
       newFormat.push({
         attId: key,
-        attVal: value,
+        attVal: value.attValue,
+        attName: value.attName,
       });
     }
     return newFormat;
@@ -73,7 +74,11 @@ export class RequestsService {
 
   updatedAttributes: Map<any, any> = new Map();
   editFormValue(attribute: any) {
-    this.updatedAttributes.set(attribute.id, attribute.attValue);
+    this.updatedAttributes.set(attribute.id, {
+      attValue: attribute?.attValue,
+      attName: attribute?.attName,
+    });
+    console.log('att name in form -> ', attribute?.attName);
   }
 
   editTableValue(rowsData: any, field: any, ids: any) {
@@ -81,7 +86,11 @@ export class RequestsService {
     for (let row of rowsData) {
       lastUpdatedValue += row.get(field) + '/*$';
     }
-    this.updatedAttributes.set(ids.get(field), lastUpdatedValue);
+    this.updatedAttributes.set(ids.get(field), {
+      attValue: lastUpdatedValue,
+      attName: field,
+    });
+    console.log('att name in table -> ', field);
     // this.updatedAttributes.set(ids.get(field), lastUpdatedValue);
   }
 }

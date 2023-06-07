@@ -1,5 +1,6 @@
 <div class="con" style="width: 100%">
   <div class="control-bar">
+    <button class="btn mx-2" (click)="approve()">Approve</button>
     <button class="btn" (click)="updateChanges()">Save Changes</button>
   </div>
   <ng-container *ngFor="let section of requestData">

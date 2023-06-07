@@ -18,6 +18,12 @@
       *ngFor="let attribute of sectionDetails.attributes; index as i"
       class="col d-flex align-items-center"
       style="line-height: 14px"
+      [ngStyle]="{
+        width:
+          attribute?.attValue?.length + attribute?.attName?.length > 60
+            ? 'auto'
+            : '33.333333%'
+      }"
     >
       <!-- *ngIf="translateService.currentLang == 'en'" -->
       <div class="card-container">
@@ -39,7 +45,8 @@
         }" -->
       <input
         [readonly]="isReadOnly(attribute.id)"
-        [style.width.px]="attribute?.attValue?.length * 7.24"
+        [style.width.px]="attribute?.attValue?.length * 11"
+        style="min-width: 100px"
         type="text"
         pInputText
         [(ngModel)]="attribute.attValue"

@@ -78,6 +78,8 @@ export class SingleRequestComponent {
               'Success',
               'Changes Updated Successfully'
             );
+          } else {
+            this.toastService.showWarn('Warning', res.clientMessage);
           }
         },
         error: (err) => {
@@ -88,5 +90,9 @@ export class SingleRequestComponent {
         },
       });
     }
+  }
+
+  approve() {
+    console.log('approve btn pressed');
   }
 }
