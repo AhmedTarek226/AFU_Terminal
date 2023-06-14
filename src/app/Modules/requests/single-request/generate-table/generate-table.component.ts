@@ -32,6 +32,7 @@ export class GenerateTableComponent implements OnInit {
   tableId: string;
   dataKey: string;
   @ViewChild('myTable') myTable: any;
+  @Input() isEditable: boolean = false;
   constructor(
     private sharedService: SharedService,
     private requestsService: RequestsService
@@ -46,50 +47,17 @@ export class GenerateTableComponent implements OnInit {
   totalRow: number = 10;
   output: Map<any, any> = new Map();
   ids: Map<any, any> = new Map();
-  newValue: string | null = null;
+
   ngOnInit(): void {
     this.sectionDetails?.attributes.map((val: any) => {
       this.headers.push(val.attName);
     });
-    let maxLength =
-      this.sectionDetails?.attributes[0].attValue?.split('/*$').length;
-    for (let i = 1; i < this.sectionDetails?.attributes.length; i++) {
-      if (
-        this.sectionDetails?.attributes[i].attValue?.split('/*$').length >
-        maxLength
-      ) {
-        maxLength =
-          this.sectionDetails?.attributes[i].attValue?.split('/*$').length;
-      }
+    if (this.sectionDetails?.attributes[0].attValue == null) {
+      this.pushEmptyRows();
+    } else {
+      this.handleRows();
     }
-    for (let i = 0; i < maxLength; i++) {
-      this.sectionDetails?.attributes.forEach((attribute: any) => {
-        this.output.set(attribute.attName, attribute.attValue?.split('/*$')[i]);
-        this.ids.set(attribute.attName, attribute.id);
-      });
 
-      // handle empty rows
-      let pushOutput = false;
-      for (let j = 0; j < this.output.size; j++) {
-        let value = this.output.get(Array.from(this.output.keys())[j]);
-        if (
-          value == '' ||
-          value == 'blank' ||
-          value == undefined ||
-          value == null
-        ) {
-          continue;
-        } else {
-          pushOutput = true;
-          break;
-        }
-      }
-      if (pushOutput) {
-        this.rowsData.push(this.output);
-      }
-      console.log('output ->', this.output);
-      this.output = new Map();
-    }
     this.selectedColumns = this.headers;
     for (let i = 0; i < this.selectedColumns?.length; i++) {
       this.cols.push({
@@ -101,6 +69,60 @@ export class GenerateTableComponent implements OnInit {
     this.selectedcols = this.cols.filter((col: any) => col.display == 1);
     this._selectedColumns = this.selectedcols;
     console.log('Rows Data -> ', this.rowsData);
+  }
+
+  newValue: string | null = null;
+  pushEmptyRows() {
+    for (let i = 0; i < 2; i++) {
+      this.sectionDetails?.attributes.forEach((attribute: any) => {
+        this.output.set(attribute.attName, '');
+        this.ids.set(attribute.attName, attribute.id);
+      });
+      this.rowsData.push(this.output);
+      this.output = new Map();
+    }
+  }
+  getMaxLength(attributes: any[]): number {
+    let maxLength = attributes[0].attValue?.split('/*$').length;
+    for (let i = 1; i < attributes.length; i++) {
+      if (attributes[i].attValue?.split('/*$').length > maxLength) {
+        maxLength = attributes[i].attValue?.split('/*$').length;
+      }
+    }
+    return maxLength;
+  }
+  removeEmptyRows(): boolean {
+    let pushOutput = false;
+    for (let j = 0; j < this.output.size; j++) {
+      let value = this.output.get(Array.from(this.output.keys())[j]);
+      if (
+        value == '' ||
+        value == 'blank' ||
+        value == undefined ||
+        value == null
+      ) {
+        continue;
+      } else {
+        pushOutput = true;
+        break;
+      }
+    }
+    return pushOutput;
+  }
+  handleRows() {
+    let maxLength = this.getMaxLength(this.sectionDetails?.attributes);
+    for (let i = 0; i < maxLength; i++) {
+      this.sectionDetails?.attributes.forEach((attribute: any) => {
+        this.output.set(attribute.attName, attribute.attValue?.split('/*$')[i]);
+        this.ids.set(attribute.attName, attribute.id);
+      });
+      let pushOutput = this.removeEmptyRows();
+      if (pushOutput) {
+        this.rowsData.push(this.output);
+      }
+      console.log('output ->', this.output);
+      this.output = new Map();
+    }
   }
 
   updatedAttributes: Map<any, any> = new Map();

@@ -39,7 +39,14 @@ export class RequestsService {
     );
   }
 
-  editRequest(): Observable<any> | null {
+  approveReq(reqId: number, status: string): Observable<any> {
+    return this.http.post(
+      `${environment.apiURL}/OnBoardingRequest/approveRequest?reqId=${reqId}&status=${status}`,
+      {}
+    );
+  }
+
+  editRequest(reqId: number): Observable<any> | null {
     let newUpdatedAttributes = this.handleUpdatedAttributes(
       this.updatedAttributes
     );
@@ -49,7 +56,7 @@ export class RequestsService {
       return null;
     }
     return this.http.post(
-      `${environment.apiURL}/OnBoardingRequest/editRequestData`,
+      `${environment.apiURL}/OnBoardingRequest/editRequestData?reqId=${reqId}`,
       newUpdatedAttributes
     );
   }

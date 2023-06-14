@@ -17,6 +17,7 @@ export class GenerateFormComponent implements OnChanges {
   cols: any;
   @Input() sectionDetails: any;
   readOnlyList: any[] = [];
+  @Input() isEditable: boolean = false;
 
   constructor(private requestsService: RequestsService) {}
 

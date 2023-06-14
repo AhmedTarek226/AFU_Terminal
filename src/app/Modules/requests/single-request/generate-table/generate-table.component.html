@@ -56,21 +56,25 @@
         [pEditableColumn]="rowData[col.header]"
         [pEditableColumnField]="rowData[col.field]"
       >
-        <!-- <span>{{ rowData.get(col.field) | handleVoidValue }} </span> -->
-        <p-cellEditor>
-          <ng-template pTemplate="input">
-            <input
-              pInputText
-              type="text"
-              [(ngModel)]="newValue"
-              (ngModelChange)="setChanges(rowData, col.field)"
-              class="p-inputtext-sm"
-            />
-          </ng-template>
-          <ng-template pTemplate="output">
-            {{ rowData.get(col.field) | handleVoidValue }}
-          </ng-template>
-        </p-cellEditor>
+        <span *ngIf="!isEditable; else editableCell"
+          >{{ rowData.get(col.field) | handleVoidValue }}
+        </span>
+        <ng-template #editableCell>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="newValue"
+                (ngModelChange)="setChanges(rowData, col.field)"
+                class="p-inputtext-sm"
+              />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ rowData.get(col.field) | handleVoidValue }}
+            </ng-template>
+          </p-cellEditor>
+        </ng-template>
       </td>
     </tr>
   </ng-template>

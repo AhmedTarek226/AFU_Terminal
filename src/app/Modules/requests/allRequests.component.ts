@@ -7,6 +7,7 @@ import { RequestsService } from 'src/app/Services/requests.service';
 import { ToastService } from 'src/app/Services/toast.service';
 import { SharedService } from 'src/app/Services/shared.service';
 import { Paginator } from 'primeng/paginator';
+import { NavigationExtras, Router } from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -40,7 +41,8 @@ export class AllRequestsComponent implements OnInit {
     private requestsService: RequestsService,
     private sharedService: SharedService,
     private toastService: ToastService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {
     this.showSearchError = false;
     this.subscriptions = [];
@@ -86,6 +88,13 @@ export class AllRequestsComponent implements OnInit {
         ),
         display: 1,
       },
+      {
+        field: 'status',
+        header: this.translateService.instant(
+          'requests.requestsList.headers.status'
+        ),
+        display: 1,
+      },
     ];
     this.selectedcols = this.cols.filter((col: any) => col.display == 1);
     this._selectedColumns = this.selectedcols;
@@ -102,6 +111,20 @@ export class AllRequestsComponent implements OnInit {
     this._selectedColumns = this.selectedcols;
   }
   requestData: any;
+
+  showRequest(reqId: number, status: string) {
+    // Passing parameter in the URL
+    const navigationExtras: NavigationExtras = {
+      queryParamsHandling: 'preserve', // Optional: To preserve existing query parameters
+      skipLocationChange: true, // Optional: To prevent updating the browser URL
+    };
+
+    // this.router.navigate([`/Requests/${reqId}`], navigationExtras);
+    this.router.navigate(
+      ['/Requests', reqId, { status: status }],
+      navigationExtras
+    );
+  }
   // selectedRow:number;
   editRequest(requestId: number) {
     // alert('Edit request -> ' + requestId);

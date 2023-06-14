@@ -56,7 +56,8 @@
         "requestId": "رقم الطلب",
         "templateId": "رقم النموذج",
         "creationDate": "تاريخ الإنشاء",
-        "jiraNo": "رقم Jira"
+        "jiraNo": "رقم Jira",
+        "status": "الحالة"
       },
       "selectedColumns": "الأعمدة المحددة",
       "searchKeyword": "كلمة البحث",

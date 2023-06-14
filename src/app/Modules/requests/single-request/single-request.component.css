@@ -45,7 +45,8 @@
 
 .control-bar {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   margin: 0.5rem 0;
 }
 

@@ -58,7 +58,8 @@
         "requestId": "Request Id",
         "templateId": "Template Id",
         "creationDate": "Creation Date",
-        "jiraNo": "Jira No"
+        "jiraNo": "Jira No",
+        "status": "Status"
       },
       "selectedColumns": "Selected Columns",
       "searchKeyword": "Search Keyword",

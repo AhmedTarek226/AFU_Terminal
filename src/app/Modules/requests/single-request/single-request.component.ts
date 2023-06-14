@@ -4,7 +4,11 @@ import { RequestsService } from 'src/app/Services/requests.service';
 import { GenerateFormComponent } from './generate-form/generate-form.component';
 import { GenerateTableComponent } from './generate-table/generate-table.component';
 import { ToastService } from 'src/app/Services/toast.service';
-
+type statusOption =
+  | 'In-Complete Data'
+  | 'Failed'
+  | 'Pending Approval'
+  | 'Approved';
 @Component({
   selector: 'app-single-request',
   templateUrl: './single-request.component.html',
@@ -12,13 +16,15 @@ import { ToastService } from 'src/app/Services/toast.service';
 })
 export class SingleRequestComponent {
   requestData: any;
-  requestId: any;
+  requestId: number = 0;
+  status: statusOption = 'Failed';
   @ViewChild(GenerateFormComponent)
   generateFormComponent!: GenerateFormComponent;
   @ViewChild(GenerateTableComponent)
   generateTableComponent!: GenerateTableComponent;
   // updatedAttributes: Map<any, any> = new Map();
-
+  // statusList: string[] = ['In-Complete Data', 'Failed', 'Pending Approval'];
+  isEditable: boolean = false;
   constructor(
     private requestsService: RequestsService,
     private route: ActivatedRoute,
@@ -27,10 +33,23 @@ export class SingleRequestComponent {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.requestId = params['id'];
+      this.status = params['status'];
+      console.log(this.requestId);
+      console.log(this.status);
+      if (
+        this.status &&
+        (this.status === 'In-Complete Data' || this.status === 'Failed')
+      )
+        this.isEditable = true;
+      else this.isEditable = false;
     });
+    // return;
     this.requestsService.getSingleRequest(this.requestId).subscribe({
       next: (response: any) => {
         this.requestData = response;
+        if (this.requestData.length == 0) {
+          this.toastService.showWarn('Warning', 'No Data Found');
+        }
         console.log(this.requestData);
       },
       error: (err) => {
@@ -67,10 +86,10 @@ export class SingleRequestComponent {
     //   return;
     // }
 
-    if (!this.requestsService.editRequest()) {
+    if (!this.requestsService.editRequest(this.requestId)) {
       this.toastService.showWarn('Warning', 'No Changes Available');
     } else {
-      this.requestsService.editRequest()?.subscribe({
+      this.requestsService.editRequest(this.requestId)?.subscribe({
         next: (res: any) => {
           // console.log(res)
           if (res?.statusCode == 200) {
@@ -92,7 +111,23 @@ export class SingleRequestComponent {
     }
   }
 
-  approve() {
+  approveReq() {
     console.log('approve btn pressed');
+    this.requestsService.approveReq(this.requestId, this.status).subscribe({
+      next: (res: any) => {
+        if (res?.statusCode == 200) {
+          this.toastService.showSuccess(
+            'Success',
+            'Request approved successfully'
+          );
+        } else {
+          this.toastService.showWarn('Warning', res.clientMessage);
+        }
+      },
+      error: (err) => {
+        this.toastService.showError('ERROR', 'Unknown Error !!');
+      },
+      complete: () => {},
+    });
   }
 }

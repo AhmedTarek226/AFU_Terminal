@@ -7,6 +7,9 @@
     >
       Import from jira
     </button>
+    <!-- <button class="btn" (click)="showRequest(1487, 'Failed')">
+      Show Request
+    </button> -->
   </div>
   <app-search
     (searchData)="getDoneSearch($event)"
@@ -32,7 +35,8 @@
             'requestId',
             'templateId',
             'creationDate',
-            'jiraNo'
+            'jiraNo',
+            'status'
           ]"
           [reorderableColumns]="true"
           [metaKeySelection]="true"
@@ -139,7 +143,7 @@
               <td>
                 <i
                   class="fa-regular fa-pen-to-square fs-4"
-                  [routerLink]="['/Requests', rowData['requestId']]"
+                  (click)="showRequest(rowData['requestId'], rowData['status'])"
                 ></i>
                 <!-- (click)="editRequest(rowData['requestId'])" -->
               </td>

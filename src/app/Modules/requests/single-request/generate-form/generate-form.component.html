@@ -44,7 +44,7 @@
           width: isReadOnly(attribute.id) ? '-webkit-fill-available' : 'auto'
         }" -->
       <input
-        [readonly]="isReadOnly(attribute.id)"
+        [readonly]="!isEditable || isReadOnly(attribute.id)"
         [style.width.px]="attribute?.attValue?.length * 11"
         style="min-width: 100px"
         type="text"
