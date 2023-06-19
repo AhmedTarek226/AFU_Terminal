@@ -1,9 +1,16 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RequestsService } from 'src/app/Services/requests.service';
 import { GenerateFormComponent } from './generate-form/generate-form.component';
 import { GenerateTableComponent } from './generate-table/generate-table.component';
 import { ToastService } from 'src/app/Services/toast.service';
+import { Location } from '@angular/common';
 type statusOption =
   | 'In-Complete Data'
   | 'Failed'
@@ -28,9 +35,26 @@ export class SingleRequestComponent {
   constructor(
     private requestsService: RequestsService,
     private route: ActivatedRoute,
-    private toastService: ToastService
-  ) {}
+    private toastService: ToastService,
+    private router: Router,
+    private location: Location
+  ) {
+    this.requestsService.backFromSingleRequest.next(false);
+    this.location.go('/Requests');
+  }
+
+  // @HostListener('window:popstate', ['$event'])
+  // onPopState(event: any) {
+  //   this.location.forward();
+  // }
+
+  // @HostListener('window:beforeunload', ['$event'])
+  // onBeforeUnload(event: any) {
+  //   event.preventDefault();
+  //   event.returnValue = false;
+  // }
   ngOnInit(): void {
+    // this.location.replaceState('/Requests');
     this.route.params.subscribe((params) => {
       this.requestId = params['id'];
       this.status = params['status'];
@@ -70,6 +94,10 @@ export class SingleRequestComponent {
   //   this.updatedAttributes.set(ids.get(field), lastUpdatedValue);
   //   // this.updatedAttributes.set(ids.get(field), lastUpdatedValue);
   // }
+  backToRequests() {
+    this.requestsService.backFromSingleRequest.next(true);
+    this.router.navigate(['/Requests']);
+  }
   updateChanges() {
     // this.updatedAttributes.set
     // let updatedAttributes = new Map([

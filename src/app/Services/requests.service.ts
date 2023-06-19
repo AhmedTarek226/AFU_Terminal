@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, retry } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, retry } from 'rxjs';
 import { ISearchData } from '../Models/requests/ISearchData';
 import { SharedService } from './shared.service';
 import { environment } from 'src/environment/environment';
@@ -9,6 +9,8 @@ import { environment } from 'src/environment/environment';
   providedIn: 'root',
 })
 export class RequestsService {
+  backFromSingleRequest: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  searchObj: any;
   constructor(private http: HttpClient, private sharedService: SharedService) {}
   search(searchData: ISearchData): Observable<any> {
     return this.http

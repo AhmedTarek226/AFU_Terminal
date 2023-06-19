@@ -38,12 +38,19 @@
               {{ "requests.search.status" | translate }}
             </label>
             <span class="p-inputtext-sm mt-1">
-              <input
+              <p-dropdown
+                [options]="statusList"
+                [style]="{ width: '98%' }"
+                formControlName="status"
+                placeholder="Select Status"
+                [showClear]="true"
+              ></p-dropdown>
+              <!-- <input
                 type="text"
                 [style]="{ width: '98%' }"
                 pInputText
                 formControlName="status"
-              />
+              /> -->
             </span>
           </div>
           <div class="col-md-3 p-0 d-flex flex-column">

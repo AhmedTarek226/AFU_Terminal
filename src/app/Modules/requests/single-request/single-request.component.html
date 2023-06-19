@@ -1,8 +1,11 @@
 <div class="con" style="width: 100%">
   <div class="control-bar">
-    <h4 style="font-size: 14px !important; margin: 4px 0">
-      Request ID: {{ requestId }}
-    </h4>
+    <div style="display: flex">
+      <button class="btn mx-2" (click)="backToRequests()">< Back</button>
+      <h4 style="font-size: 14px !important; margin: 4px 0">
+        Request ID: {{ requestId }}
+      </h4>
+    </div>
     <ng-container *ngIf="status !== 'Approved'">
       <button
         *ngIf="!isEditable; else showSaveChanges"

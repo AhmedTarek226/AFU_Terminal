@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { SharedService } from 'src/app/Services/shared.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ISearchData } from 'src/app/Models/requests/ISearchData';
+import { RequestsService } from 'src/app/Services/requests.service';
 
 @Component({
   selector: 'app-search',
@@ -22,11 +23,13 @@ export class SearchComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   searchError: { msg: string; show: boolean };
   subscriptions: Subscription[] = [];
+  statusList: string[] = [];
   @Output() searchData = new EventEmitter<ISearchData>();
   @Output() clearView = new EventEmitter();
   constructor(
     private sharedService: SharedService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private requestsService: RequestsService
   ) {
     this.searchError = {
       msg: 'fieldsRequired',
@@ -41,10 +44,28 @@ export class SearchComponent implements OnInit, OnDestroy {
       status: new FormControl(''),
       creationDate: new FormControl(''),
     });
+    this.statusList = [
+      'Approved',
+      'In-Complete Data',
+      'Pending Approval',
+      'Failed',
+    ];
     // this.searchData.emit({ field1: '', field2: '', field3: '' });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.requestsService.backFromSingleRequest.subscribe((value: boolean) => {
+      if (value) {
+        // search by old value
+        this.searchForm.patchValue({
+          requestId: this.requestsService.searchObj.requestId,
+          jiraNum: this.requestsService.searchObj.jiraNum,
+          status: this.requestsService.searchObj.status,
+          creationDate: this.requestsService.searchObj.creationDate,
+        });
+      }
+    });
+  }
 
   reset() {
     this.searchError = {

@@ -34,6 +34,7 @@ export class AuthGuard implements CanActivate {
     //     return true;
     //   }
     // }
+    // return true;
     this.auth.setPrevURL(state.url);
     console.log('url -> ' + state.url);
 

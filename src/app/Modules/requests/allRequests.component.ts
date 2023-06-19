@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { ISearchData } from 'src/app/Models/requests/ISearchData';
@@ -15,7 +15,7 @@ declare var $: any;
   templateUrl: './allRequests.component.html',
   styleUrls: ['./allRequests.component.css'],
 })
-export class AllRequestsComponent implements OnInit {
+export class AllRequestsComponent implements OnInit, OnDestroy {
   requestsList: IRequestDetails[];
   showSearchError: boolean;
   subscriptions: Subscription[];
@@ -98,7 +98,25 @@ export class AllRequestsComponent implements OnInit {
     ];
     this.selectedcols = this.cols.filter((col: any) => col.display == 1);
     this._selectedColumns = this.selectedcols;
-    this.getRequests(0, this.searchSize);
+    // let backFromSingleRequest = false;
+    // this.getRequests(0, this.searchSize);
+    let hasCalledGetRequests = false;
+    let hasCalledGetDoneSearch = false;
+    let sub = this.requestsService.backFromSingleRequest.subscribe(
+      (value: boolean) => {
+        if (value && !hasCalledGetDoneSearch) {
+          // search by old value
+          hasCalledGetDoneSearch = true;
+          this.getDoneSearch(this.requestsService.searchObj);
+        } else if (!hasCalledGetRequests) {
+          console.log('hereeeee');
+
+          hasCalledGetRequests = true;
+          this.getRequests(0, this.searchSize);
+        }
+      }
+    );
+    this.subscriptions.push(sub);
   }
 
   @Input() get selectedColumns(): any[] {
@@ -112,7 +130,9 @@ export class AllRequestsComponent implements OnInit {
   }
   requestData: any;
 
+  unsubscripeApi: boolean = false;
   showRequest(reqId: number, status: string) {
+    // this.unsubscripeApi = true;
     // Passing parameter in the URL
     const navigationExtras: NavigationExtras = {
       queryParamsHandling: 'preserve', // Optional: To preserve existing query parameters
@@ -124,6 +144,7 @@ export class AllRequestsComponent implements OnInit {
       ['/Requests', reqId, { status: status }],
       navigationExtras
     );
+    // this.requestsService.backFromSingleRequest.next(false);
   }
   // selectedRow:number;
   editRequest(requestId: number) {
@@ -142,13 +163,15 @@ export class AllRequestsComponent implements OnInit {
 
   resetOnlyTable(): void {
     $('#inputID').val('');
-    this.myTable.reset();
+    this.myTable?.reset();
   }
 
   reset() {
-    this.requestsList = [];
-    this.paginatorObj['totalRecords'] = 0;
-    this.totalRow = 0;
+    // this.requestsList = [];
+    // this.paginatorObj['totalRecords'] = 0;
+    // this.totalRow = 0;
+    this.searchSize = 50;
+    this.getRequests(0, this.searchSize);
   }
   paginate(changes: any) {
     this.searchSize = changes.rows;
@@ -160,6 +183,7 @@ export class AllRequestsComponent implements OnInit {
   }
   findRequests(pageNumber: number, pageSize: number, _fdata: any) {
     console.log('search object -> ', _fdata);
+    this.requestsService.searchObj = { ..._fdata };
     this.loading = true;
 
     this.requestsList = [];
@@ -180,7 +204,6 @@ export class AllRequestsComponent implements OnInit {
   }
   getRequests(pageNumber: number, pageSize: number) {
     this.loading = true;
-
     this.requestsList = [];
     let sub = this.requestsService
       .getAllRequests(pageNumber, pageSize)
@@ -218,6 +241,7 @@ export class AllRequestsComponent implements OnInit {
 
   // data Search
   getDoneSearch($event: any) {
+    // this.requestsService.backFromSingleRequest.next(false);
     this.resetOnlyTable();
     if (JSON.stringify($event) === JSON.stringify({})) {
       if (this.subs.closed === false) {
