@@ -1,1 +1,1 @@
-# reschedulePortal
+# AFU Terminal
