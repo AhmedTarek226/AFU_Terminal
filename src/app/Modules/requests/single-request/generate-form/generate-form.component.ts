@@ -18,25 +18,48 @@ export class GenerateFormComponent implements OnChanges {
   @Input() sectionDetails: any;
   readOnlyList: any[] = [];
   @Input() isEditable: boolean = false;
+  attributes: any[] = [];
 
   constructor(private requestsService: RequestsService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     // let att = 'Visa/*$MasterCard/*$Amex7/*$SamsungPay/*$';
     // console.log(att.replaceAll('/*$', ','));
-
+    this.attributes = this.sectionDetails?.attributes;
     console.log(
       'this.sectionDetails.attributes -> ',
       this.sectionDetails.attributes
     );
+    this.attributes.sort(function (a, b) {
+      if (a.attName < b.attName) {
+        return -1;
+      }
+      if (a.attName > b.attName) {
+        return 1;
+      }
+      return 0;
+    });
 
-    for (let att of this.sectionDetails.attributes) {
-      if (att.attValue?.includes('/*$')) {
-        let newAtt = att.attValue.replaceAll('/*$', ',');
+    for (let att of this.attributes) {
+      if (att?.attValue?.includes('/*$')) {
+        let newAtt = att.attValue.replaceAll('/*$blank', '');
+        newAtt = newAtt.replaceAll('/*$', ',');
         att.attValue = newAtt;
         this.readOnlyList.push(att.id);
       }
     }
+  }
+
+  sortAttributesAlphabetically(attributes: any[]) {
+    attributes.sort(function (a, b) {
+      if (a.attName < b.attName) {
+        return -1;
+      }
+      if (a.attName > b.attName) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   isReadOnly(id: any): boolean {

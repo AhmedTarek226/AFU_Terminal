@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { RequestsService } from 'src/app/Services/requests.service';
 import { GenerateFormComponent } from './generate-form/generate-form.component';
 import { GenerateTableComponent } from './generate-table/generate-table.component';
@@ -125,6 +125,7 @@ export class SingleRequestComponent {
               'Success',
               'Changes Updated Successfully'
             );
+            this.reloadWithChanges();
           } else {
             this.toastService.showWarn('Warning', res.clientMessage);
           }
@@ -138,6 +139,34 @@ export class SingleRequestComponent {
       });
     }
   }
+  reloadWithChanges() {
+    let searchObject = {
+      requestId: this.requestId,
+      jiraNum: '',
+      status: '',
+      creationDate: '',
+    };
+    this.requestsService.findRequests(0, 10, searchObject).subscribe({
+      next: (Response: any) => {
+        this.status = Response?.content[0]?.status;
+        const navigationExtras: NavigationExtras = {
+          queryParamsHandling: 'preserve', // Optional: To preserve existing query parameters
+          skipLocationChange: true, // Optional: To prevent updating the browser URL
+          replaceUrl: true,
+        };
+        this.router.navigate(
+          ['/Requests', this.requestId, { status: this.status }],
+          navigationExtras
+        );
+      },
+      error: (err: any) => {
+        // this.msgErrorApi = 'errorMsg';
+      },
+      complete: () => {
+        // this.loading = false;
+      },
+    });
+  }
 
   approveReq() {
     console.log('approve btn pressed');
@@ -148,6 +177,7 @@ export class SingleRequestComponent {
             'Success',
             'Request approved successfully'
           );
+          this.status = 'Approved';
         } else {
           this.toastService.showWarn('Warning', res.clientMessage);
         }

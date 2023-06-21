@@ -107,10 +107,18 @@ export class AllRequestsComponent implements OnInit, OnDestroy {
         if (value && !hasCalledGetDoneSearch) {
           // search by old value
           hasCalledGetDoneSearch = true;
-          this.getDoneSearch(this.requestsService.searchObj);
+          if (
+            this.requestsService.searchObj.status === '' &&
+            this.requestsService.searchObj.creationDate === '' &&
+            this.requestsService.searchObj.jiraNum === '' &&
+            this.requestsService.searchObj.requestId === ''
+          ) {
+            this.getRequests(0, this.searchSize);
+          } else {
+            this.getDoneSearch(this.requestsService.searchObj);
+          }
         } else if (!hasCalledGetRequests) {
-          console.log('hereeeee');
-
+          // console.log('hereeeee');
           hasCalledGetRequests = true;
           this.getRequests(0, this.searchSize);
         }
@@ -170,8 +178,18 @@ export class AllRequestsComponent implements OnInit, OnDestroy {
     // this.requestsList = [];
     // this.paginatorObj['totalRecords'] = 0;
     // this.totalRow = 0;
+
     this.searchSize = 50;
     this.getRequests(0, this.searchSize);
+  }
+
+  setEmptySearchObj() {
+    this.requestsService.searchObj = {
+      requestId: '',
+      jiraNum: '',
+      status: '',
+      creationDate: '',
+    };
   }
   paginate(changes: any) {
     this.searchSize = changes.rows;
@@ -205,6 +223,7 @@ export class AllRequestsComponent implements OnInit, OnDestroy {
   getRequests(pageNumber: number, pageSize: number) {
     this.loading = true;
     this.requestsList = [];
+    this.setEmptySearchObj();
     let sub = this.requestsService
       .getAllRequests(pageNumber, pageSize)
       .subscribe({

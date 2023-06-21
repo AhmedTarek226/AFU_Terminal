@@ -1,21 +1,16 @@
 <h3
-  *ngIf="
-    !this.sectionDetails.attributes ||
-    this.sectionDetails.attributes.length == 0
-  "
+  *ngIf="!this.attributes || this.attributes.length == 0"
   class="emptymessage"
 >
   No data found for this section
 </h3>
 <div
   class="container py-0"
-  *ngIf="
-    this.sectionDetails.attributes && this.sectionDetails.attributes.length > 0
-  "
+  *ngIf="this.attributes && this.attributes.length > 0"
 >
   <div class="row row-cols-3 p-0 m-0 py-2 align-items-center gy-1">
     <div
-      *ngFor="let attribute of sectionDetails.attributes; index as i"
+      *ngFor="let attribute of attributes; index as i"
       class="col d-flex align-items-center"
       style="line-height: 14px"
       [ngStyle]="{

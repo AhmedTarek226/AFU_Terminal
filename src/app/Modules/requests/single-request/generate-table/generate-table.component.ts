@@ -4,16 +4,6 @@ import { SingleRequestComponent } from '../single-request.component';
 import { RequestsService } from 'src/app/Services/requests.service';
 declare var $: any;
 
-interface IRowData {
-  merchantId: string;
-  terminalId: number;
-  terminalSerialNo: number;
-  terminalName: string;
-  terminalType: string;
-  accountNo: number;
-  currency: string;
-}
-
 interface IColumn {
   field: string;
   header: string;
@@ -49,10 +39,12 @@ export class GenerateTableComponent implements OnInit {
   ids: Map<any, any> = new Map();
 
   ngOnInit(): void {
+    let isAttValue = true;
     this.sectionDetails?.attributes.map((val: any) => {
       this.headers.push(val.attName);
+      if (val?.attValue !== null) isAttValue = false;
     });
-    if (this.sectionDetails?.attributes[0].attValue == null) {
+    if (isAttValue) {
       this.pushEmptyRows();
     } else {
       this.handleRows();
@@ -83,8 +75,8 @@ export class GenerateTableComponent implements OnInit {
     }
   }
   getMaxLength(attributes: any[]): number {
-    let maxLength = attributes[0].attValue?.split('/*$').length;
-    for (let i = 1; i < attributes.length; i++) {
+    let maxLength = 0;
+    for (let i = 0; i < attributes.length; i++) {
       if (attributes[i].attValue?.split('/*$').length > maxLength) {
         maxLength = attributes[i].attValue?.split('/*$').length;
       }
@@ -113,7 +105,8 @@ export class GenerateTableComponent implements OnInit {
     let maxLength = this.getMaxLength(this.sectionDetails?.attributes);
     for (let i = 0; i < maxLength; i++) {
       this.sectionDetails?.attributes.forEach((attribute: any) => {
-        this.output.set(attribute.attName, attribute.attValue?.split('/*$')[i]);
+        let val = attribute.attValue ? attribute.attValue?.split('/*$')[i] : '';
+        this.output.set(attribute.attName, val);
         this.ids.set(attribute.attName, attribute.id);
       });
       let pushOutput = this.removeEmptyRows();
