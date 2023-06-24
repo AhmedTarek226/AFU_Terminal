@@ -75,7 +75,7 @@ export class GenerateTableComponent implements OnInit {
     }
   }
   getMaxLength(attributes: any[]): number {
-    let maxLength = 0;
+    let maxLength = 2;
     for (let i = 0; i < attributes.length; i++) {
       if (attributes[i].attValue?.split('/*$').length > maxLength) {
         maxLength = attributes[i].attValue?.split('/*$').length;
@@ -110,7 +110,7 @@ export class GenerateTableComponent implements OnInit {
         this.ids.set(attribute.attName, attribute.id);
       });
       let pushOutput = this.removeEmptyRows();
-      if (pushOutput) {
+      if (pushOutput || maxLength == 2) {
         this.rowsData.push(this.output);
       }
       console.log('output ->', this.output);
